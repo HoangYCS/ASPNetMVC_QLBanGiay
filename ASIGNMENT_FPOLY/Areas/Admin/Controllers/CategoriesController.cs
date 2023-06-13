@@ -54,16 +54,6 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
             else return BadRequest();
         }
 
-        [HttpPost]
-        public async Task<ActionResult> CreateCategory([FromBody] Category p)
-        {
-            if (categoryService.CreateCategory(p))
-            {
-                return Json(new { key = p.Id });
-            }
-            else return BadRequest();
-        }
-
         [HttpGet]
         public ActionResult Edit(Guid id)
         {
@@ -83,7 +73,7 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
         //{
         //    return View();
         //}
-
+         
         //[HttpPost]
         public ActionResult Delete(Guid id)
         {

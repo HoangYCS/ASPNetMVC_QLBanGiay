@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ASIGNMENT_FPOLY.Migrations
 {
-    public partial class a1 : Migration
+    public partial class A1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

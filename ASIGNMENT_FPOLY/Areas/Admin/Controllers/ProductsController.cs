@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using AutoMapper;
-using System.Runtime.CompilerServices;
-using System.Net.NetworkInformation;
 
 namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
 {
@@ -46,47 +44,8 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
             //return View(products);
             return View(products);
         }
-        [HttpPost]
-        public async Task<ActionResult> UpdateProduct(ProductViewModel pro, IFormFile file)
-        {
-            var product = productService.GetProductById(pro.Id);
-            if (file != null)
-            {
-                string sourcePath = file.FileName;
-                product.Image = sourcePath;
-                string destinationPath = @"D:\ASM\ASIGNMENT_FPOLY\ASIGNMENT_FPOLY\wwwroot\assets\images\others\";
-                string fileName = Path.GetFileName(sourcePath);
-                string destinationFilePath = Path.Combine(destinationPath, fileName);
-                using (var stream = new FileStream(destinationFilePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-            }
-            product.Price = pro.Price;
-            product.AvailableQuality= pro.AvailableQuality;
-            product.Description = pro.Description;
-            productService.UpdateProduct(product);
-            return Ok();
-        }
 
 
-        [HttpPost]
-        public IActionResult GetProduct(ProductViewModel obj)
-        {
-            var productExists = productService.GetAllProducts()
-    .Any(pro => pro.ProductName == obj.ProductName.Trim() && pro.BrandId == obj.BrandId && pro.ColorId == obj.ColorId && pro.SizeId == obj.SizeId && pro.CategoryId == obj.CategoryId);
-            if (productExists)
-            {
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<Product, Product>());
-                var mapper = config.CreateMapper();
-                var product = productService.GetAllProducts()
-    .FirstOrDefault(pro => pro.ProductName == obj.ProductName.Trim() && pro.BrandId == obj.BrandId && pro.ColorId == obj.ColorId && pro.SizeId == obj.SizeId && pro.CategoryId == obj.CategoryId);
-                // Sao chép đối tượng product
-                var initialProduct = mapper.Map<Product, Product>(product);
-                return Json(new { success = productExists, price = initialProduct.Price, soLuong = initialProduct.AvailableQuality, moTa = initialProduct.Description, image = initialProduct.Image, idProduct = initialProduct.Id });
-            }
-            return Json(new { success = productExists });
-        }
         public IActionResult SelectedStatus(string searchValue)
         {
             if (searchValue == "In Stock")
@@ -112,9 +71,6 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
             return View(productService.GetProductById(id));
         }
 
-
-
-
         // GET: ProductsController/Create
         public ActionResult Create()
         {
@@ -122,14 +78,16 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
             ViewBag.Color = new SelectList(colorService.GetAllColors().Where(x => x.Status == 1), "Id", "NameColor");
             ViewBag.Size = new SelectList(sizeService.GetAllSizes().Where(x => x.Status == 1), "Id", "SizeName");
             ViewBag.Category = new SelectList(categoryService.GetAllCategorys().Where(x => x.Status == 1), "Id", "Name");
+
             return View();
         }
 
         // POST: ProductsController/Create
         [HttpPost]
-        public async Task<ActionResult> Create(Product p, IFormFile imageFile)
+        public async Task<ActionResult> Create(Product p)
         {
-            string sourcePath = imageFile.FileName;
+            var file = Request.Form.Files["image"];
+            string sourcePath = file.FileName;
             p.Image = sourcePath;
             if (productService.CreateProduct(p))
             {
@@ -138,7 +96,7 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
                 string destinationFilePath = Path.Combine(destinationPath, fileName);
                 using (var stream = new FileStream(destinationFilePath, FileMode.Create))
                 {
-                    await imageFile.CopyToAsync(stream);
+                    await file.CopyToAsync(stream);
                 }
                 var products = productService.GetAllProducts();
                 return RedirectToAction("Index", products);
@@ -150,7 +108,7 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(Guid id)
         {
-            ViewBag.Brand = new SelectList(brandService.GetAllBrands().Where(x => x.Status == 1), "Id", "Name");
+            ViewBag.Brand = new SelectList(brandService.GetAllBrands().Where(x=>x.Status==1), "Id", "Name");
             ViewBag.Color = new SelectList(colorService.GetAllColors().Where(x => x.Status == 1), "Id", "NameColor");
             ViewBag.Size = new SelectList(sizeService.GetAllSizes().Where(x => x.Status == 1), "Id", "SizeName");
             ViewBag.Category = new SelectList(categoryService.GetAllCategorys().Where(x => x.Status == 1), "Id", "Name");
@@ -163,7 +121,7 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(Product p)
         {
             var file = Request.Form.Files["image"];
-            if (file != null)
+            if(file != null)
             {
                 string sourcePath = file.FileName;
                 p.Image = sourcePath;
@@ -187,10 +145,17 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
                 }
             }
 
-
+            
             return Content("Sản Phẩm này đã tồn tại");
         }
+        // GET: ProductsController/Delete/5
+        //public ActionResult Delete()
+        //{
+        //    return View();
+        //}
 
+        // POST: ProductsController/Delete/5
+        //[HttpPost]
         public ActionResult Delete(Guid id)
         {
             if (productService.DeleteProduct(id))

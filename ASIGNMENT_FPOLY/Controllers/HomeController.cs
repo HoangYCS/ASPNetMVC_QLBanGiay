@@ -39,10 +39,6 @@ namespace ASIGNMENT_FPOLY.Controllers
             brandService = new BrandService();
             categoryService = new CategoryService();
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         public IActionResult IndexLogin()
         {
@@ -265,12 +261,12 @@ namespace ASIGNMENT_FPOLY.Controllers
 
             return Ok();
         }
-        public IActionResult ViewProduct()
+        public IActionResult Index()
         {
             var products = productService.GetAllProducts().GroupBy(item => new { item.CategoryId, item.BrandId, item.ProductName }).Select(item => item.First()).ToList();
             ViewBag.ListColor = colorService.GetAllColors();
             ViewBag.ListSize = sizeService.GetAllSizes();
-            return PartialView("ViewProduct", products);
+            return PartialView("Index", products);
         }
 
         public IActionResult ViewProductAction(string lstColor, string lstSize, string searchKeyword, string sortBy)

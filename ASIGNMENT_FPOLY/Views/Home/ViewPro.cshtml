@@ -1,157 +1,66 @@
 ﻿@model IEnumerable<ASIGNMENT_FPOLY.Models.Product>
 
-<div class="tab-content text-charcoal pt-8">
-    <div class="tab-pane fade show active" id="grid-view" role="tabpanel" aria-labelledby="grid-view-tab">
-        <div class="product-grid-view row" style="margin-left:10px">
-            <div class="product-grid-view row">
-                @if (Model != null)
-                {
-                    foreach (var item in Model)
-                    {
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="card product-item" style="border: 2px outset rgba(3,255,247,0.57);
-border-radius: 10px 10px 10px 10px; margin-top:10px">
-                                <div class="product-img img-zoom-effect">
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="d-flex justify-content-center" style="margin-top:25px; margin-bottom: 25px; height: 150px;">
-                                        <img style="height:95%; width:95%;border: 0px solid #1C6EA4;
-border-radius: 40px 40px 40px 40px" src="~/assets/images/others/@item.Image" alt="Product Images">
-                                    </a>
+<div class="justify-content-center"
+     style="width: 98%; margin-top: 10px;margin-left: auto; margin-right: auto;">
+    <div class="cards">
+        @foreach (var item in Model)
+        {
+            <div class="card  my-card-style">
+                <div class="card-image">
+                    <img src="/assets/images/others/@item.Image" class="item-image-card-1"/>
+                    <img src="https://lh3.googleusercontent.com/-WQdbBAEEKEM/YY2vNpTZK5I/AAAAAAAA0g0/M6LMcweuYNYn-KKW7seqA3MWwvk6XhrNgCNcBGAsYHQ/h240/12.png"
+                         style="position: absolute; width: 100%;height: 100%;" />
+                </div>
+                <div class="card-content">
+                    <div class="card-top">
+                        <h3 class="card-title">@item.ProductName</h3>
+                        <div style="margin-bottom:6px" class="uDeVr">
+                            <div class="full-rating">
+                                <div class="total">
+                                    <span>4.8</span>
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                                         viewBox="0 0 24 24" size="14" color="#fdd836" style="color:#fdd836"
+                                         height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z">
+                                        </path>
+                                    </svg>
                                 </div>
-                                <div class="product-content">
-                                    @if (item.Price * item.AvailableQuality > 10000000)
-                                    {
-                                        <a class="product-name" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; letter-spacing: 1px; word-spacing: 2.8px; color: yellow; font-weight: 700; text-decoration: none solid rgb(232, 230, 227); font-style: normal; font-variant: normal; text-transform: uppercase;">@item.ProductName.ToUpper()</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="product-name pb-2" style="font-family: Arial, Helvetica, sans-serif;
-font-size: 16px;
-letter-spacing: 1px;
-word-spacing: 2.8px;
-color: #31C9FF;
-font-weight: 700;
-text-decoration: none solid rgb(232, 230, 227);
-font-style: normal;
-font-variant: normal;
-text-transform: uppercase;">@item.ProductName.ToUpper()</a>
-}
-
-
-                                    <div class="price-box pb-1">
-                                        <span class="new-price" style="font-family: Tahoma, Geneva, sans-serif;
-font-size: 13px;
-letter-spacing: -0.8px;
-word-spacing: -0.8px;
-color: #BF0D2C;
-font-weight: 400;
-text-decoration: none solid rgb(232, 230, 227);
-font-style: normal;
-font-variant: normal;
-text-transform: uppercase;">Price: @item.Price.ToString("#,##0") VNĐ</span> <br>
-<span class="new-price" style="font-family: Tahoma, Geneva, sans-serif;
-font-size: 13px;
-letter-spacing: -0.8px;
-word-spacing: -0.8px;
-color: #BF0D2C;
-font-weight: 400;
-text-decoration: none solid rgb(232, 230, 227);
-font-style: normal;
-font-variant: normal;
-text-transform: uppercase;">Tồn Kho: @item.AvailableQuality.ToString("#,##0")</span> <br>
-</div>
-<div class="rating-box">
-    <ul>
-        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
-        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
-        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
-        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
-        <li><i class="far fa-star fa-fade" style="color: #5dbc10;"></i></li>
-    </ul>
-</div>
-</div>
-</div>
-</div>
-}
-}
-            </div>
-        </div>
-    </div>
-    <div class="tab-pane fade" id="list-view" role="tabpanel" aria-labelledby="list-view-tab">
-        <div class="product-list-view with-sidebar row">
-            @if (Model != null)
-            {
-                foreach (var item in Model)
-                {
-                    <div class="col-12 pt-6">
-                        <div class="product-item">
-                            <div class="product-img img-zoom-effect">
-                                <a asp-action="Details" asp-route-id="@item.Id">
-                                    <img class="img-full" src="~/assets/images/others/@item.Image" alt="Product Images">
-                                </a>
                             </div>
-                            <div class="product-content align-self-center">
-                                <a class="product-name pb-2" style="font-family: Arial, Helvetica, sans-serif;
-font-size: 16px;
-letter-spacing: 1px;
-word-spacing: 2.8px;
-color: #31C9FF;
-font-weight: 700;
-text-decoration: none solid rgb(232, 230, 227);
-font-style: normal;
-font-variant: normal;
-text-transform: uppercase;">@item.ProductName.ToUpper()</a>
-<div class="price-box pb-1">
-    <span class="new-price" style="font-family: Tahoma, Geneva, sans-serif;
-font-size: 13px;
-letter-spacing: -0.8px;
-word-spacing: -0.8px;
-color: #BF0D2C;
-font-weight: 400;
-text-decoration: none solid rgb(232, 230, 227);
-font-style: normal;
-font-variant: normal;
-text-transform: uppercase;">Price: @item.Price.ToString("#,##0") VNĐ</span><br>
-<span class="new-price" style="font-family: Tahoma, Geneva, sans-serif;
-font-size: 13px;
-letter-spacing: -0.8px;
-word-spacing: -0.8px;
-color: #BF0D2C;
-font-weight: 400;
-text-decoration: none solid rgb(232, 230, 227);
-font-style: normal;
-font-variant: normal;
-text-transform: uppercase;">Tồn Kho: @item.AvailableQuality.ToString("#,##0")</span><br>
-</div>
-<div class="rating-box pb-2">
-    <ul>
-        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
-        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
-        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
-        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
-        <li><i class="far fa-star fa-fade" style="color: #5dbc10;"></i></li>
-    </ul>
-</div>
-<p class="short-desc mb-0">
-    @{
-        var action = "";
-        if (item.Description == null)
-        {
-            action = "NaN";
+                            <div class="boder-doc"></div>
+                            <div class="da-ban">Đã bán 185</div>
+                        </div>
+                        <div class="price-discount">
+                            <div class="price-discount__price">23.500<sup> ₫</sup></div>
+                        </div>
+                        <div class="badge-under-rating">
+                            <div class="item">
+                                <span>Nhiều màu</span>
+                            </div>
+                            <div class="item">
+                                <span>Nhiều màu</span>
+                            </div>
+                            <div class="item">
+                                <span>Nhiều màu</span>
+                            </div>
+                            <div class="item">
+                                <span>Nhiều màu</span>
+                            </div>
+                            <div class="item">
+                                <span>Nhiều màu</span>
+                            </div>
+                        </div>
+                        <div class="card-user">
 
-        }
-        else
-        {
-            action = item.Description;
-        }
-    }
-    Descripttion: @action
-</p>
-</div>
-</div>
-</div>
-}
-}
-        </div>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="d-flex justify-content-evenly">
+                            <button type="button" class="btn btn-info btn-rounded">Mua ngay</button>
+                            <button type="button" class="btn btn-info btn-rounded">So sánh</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         }
     </div>
 </div>
-
