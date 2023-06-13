@@ -1,0 +1,222 @@
+﻿@model IEnumerable<ASIGNMENT_FPOLY.Models.Product>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var List = Model.ToList();
+    string UserLogin = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+}
+<main class="main-content">
+    <img src="~/assetsLayout/images/blog/banner/Header.png" style="width: 100%; height:60%" />
+    <div class="shop-area section-space-y-axis-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 order-lg-1 order-2 pt-10 pt-lg-0">
+                    <div class="sidebar-area">
+                        <div class="widgets-searchbox mb-9">
+                            <form id="widgets-searchbox" action="#">
+                                <input class="input-field" type="text" id="search" placeholder="Search" oninput="ActionView()">
+                                <button class="widgets-searchbox-btn" type="submit">
+                                    <i class="pe-7s-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="widgets-area mb-9">
+                        </div>
+                        <div class="widgets-area mb-9">
+                            <h2 class="widgets-title mb-5">Color</h2>
+                            <div class="widgets-item">
+                                <ul class="widgets-checkbox">
+                                    @{
+                                        var index = 1;
+                                    }
+                                    @foreach (Color item in ViewBag.ListColor)
+                                    {
+                                        <li>
+                                            <input class="input-checkbox" name="selectedColors" type="checkbox" id="color-selection-@index" value="@item.NameColor" onchange="ActionView()">
+                                            <label class="label-checkbox mb-0" for="color-selection-@index">
+                                                @item.NameColor
+                                            </label>
+                                        </li>
+                                        index++;
+                                    }
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="widgets-area mb-9">
+                            <h2 class="widgets-title mb-5">Size</h2>
+                            <div class="widgets-item">
+                                <ul class="widgets-checkbox">
+                                    @{
+                                        var index2 = 1;
+                                    }
+                                    @foreach (Size item in ViewBag.ListSize)
+                                    {
+                                        <li>
+                                            <input class="input-checkbox" name="selectedSizes" type="checkbox" id="size-selection-@index2" value="@item.SizeName" onchange="ActionView()">
+                                            <label class="label-checkbox mb-0" for="size-selection-@index2">@item.SizeName</label>
+                                        </li>
+                                        index2++;
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="widgets-area mb-9">
+                            <h2 class="widgets-title mb-5">Top New Products</h2>
+                            <div class="widgets-item">
+                                <div class="swiper-container widgets-list-slider">
+                                    <div class="swiper-wrapper">
+                                        @if (Model.Count() >= 3)
+                                        {
+                                            foreach (var item in Model.OrderByDescending(x => x.CreateDate).Take(3).ToList())
+                                            {
+                                                <div class="swiper-slide">
+                                                    <div class="product-list-item">
+                                                        <div class="product-img img-zoom-effect">
+                                                            <a asp-action="Details" asp-route-id="@item.Id">
+                                                                <img class="img-full" src="~/assets/images/others/@item.Image" alt="Product Images">
+                                                            </a>
+                                                        </div>
+                                                        <div class="product-content">
+                                                            <a class="product-name" href="single-product.html">@item.ProductName</a>
+                                                            <div class="price-box pb-1">
+                                                                <span class="new-price">@item.Price.ToString("#,##0") VNĐ</span>
+                                                            </div>
+                                                            <div class="rating-box-wrap">
+                                                                <div class="rating-box">
+                                                                    <ul>
+                                                                        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+                                                                        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+                                                                        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+                                                                        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+                                                                        <li><i class="far fa-star fa-fade" style="color: #5dbc10;"></i></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widgets-area">
+                            <h2 class="widgets-title mb-5">Tag</h2>
+                            <div class="widgets-item">
+                                <ul class="widgets-tags">
+                                    <li>
+                                        <a href="javascript:void(0)">Clothing</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">Accessories</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">For Men</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">Women</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">Fashion</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 order-lg-2 order-1">
+                    <div class="product-topbar">
+                        <ul>
+                            <li class="product-view-wrap">
+                                <ul class="nav" role="tablist">
+                                    <li class="grid-view" role="presentation">
+                                        <a class="active" id="grid-view-tab" data-bs-toggle="tab" href="#grid-view" role="tab" aria-selected="true">
+                                            <i class="fa fa-th"></i>
+                                        </a>
+                                    </li>
+                                    <li class="list-view" role="presentation">
+                                        <a id="list-view-tab" data-bs-toggle="tab" href="#list-view" role="tab" aria-selected="true">
+                                            <i class="fa fa-th-list"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="page-count">
+                                <span>23</span> Product Found of <span>@Model.Count()</span>
+                            </li>
+                            <li class="short">
+                                <select class="nice-select wide rounded-0" id="sapXep" onchange="ActionView()">
+                                    <option value="All">All</option>
+                                    <option value="price_desc">Giá từ thấp đến cao</option>
+                                    <option value="price_asc">Giá từ cao đến thấp</option>
+                                    <option value="name_desc">Theo tên</option>                                    
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="ShowListPro">
+                        @await Html.PartialAsync("ViewPro", Model)
+                    </div>
+                    <div class="pagination-area pt-10">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span class="fa fa-chevron-left"></span>
+                                    </a>
+                                </li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span class="fa fa-chevron-right"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    function ActionView() {
+        var selectedColors = [];
+        $('input[name="selectedColors"]:checked').each(function () {
+            selectedColors.push($(this).val());
+        });
+
+        var selectedSizes = [];
+        $('input[name="selectedSizes"]:checked').each(function () {
+            selectedSizes.push($(this).val());
+        });
+        var search = $("#search").val();
+        var selectedValue = $("#sapXep").val();
+
+        $.ajax({
+            url: '/Home/ViewProductAction',
+            type: 'GET',
+            data: {
+                lstColor: JSON.stringify(selectedColors),
+                lstSize: JSON.stringify(selectedSizes),
+                searchKeyword: search,
+                sortBy: selectedValue
+            },
+            success: function (result) {
+                $('#ShowListPro').html(result);
+                // Thêm trạng thái mới vào lịch sử duyệt web
+            },
+            error: function () {
+                // Xử lý lỗi
+            }
+        });
+    }
+    window.onpopstate = function (event) {
+        location.reload(true);
+    }
+
+</script>

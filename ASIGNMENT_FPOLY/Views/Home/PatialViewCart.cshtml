@@ -1,0 +1,117 @@
+﻿@model IEnumerable<ASIGNMENT_FPOLY.Models.CartDetail>
+
+<div class="card mb-4">
+    <div class="card-header py-3">
+        <h5 class="mb-0">Cart - @Model.Count() items</h5>
+    </div>
+    @{
+        double sumTotal = 0;
+    }
+    @foreach (var item in Model)
+    {
+        <div class="card-body">
+            <!-- Single item -->
+            <div class="row">
+                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                    <!-- Image -->
+                    <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+                        <img src="~/assets/images/others/@item.Product.Image"
+                             class="w-100" />
+                        <a href="#!">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                        </a>
+                    </div>
+                    <!-- Image -->
+                </div>
+
+                <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                    <!-- Data -->
+                    <p><strong>@item.Product.ProductName</strong></p>
+                    <p>Color: @item.Product.Color.NameColor</p>
+                    <p>Size: @item.Product.Size.SizeName</p>
+                    <p>Price: @item.Product.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</p>
+                    <a asp-action="DeleteItemCart" asp-route-id="@item.Id" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                       title="Remove item">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
+                       title="Move to the wish list">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <!-- Data -->
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                    <!-- Quantity -->
+                    <p class="text-start text-md-center">
+                        <strong>Quantity</strong>
+                    </p>
+                    <div class="d-flex mb-4" style="max-width: 300px">
+                        <button class="btn btn-primary px-3 me-2"
+                                onclick="decrementInput(this,@item.Price)">
+                            <i class="fas fa-minus"></i>
+                        </button>
+
+                        <div class="form-outline">
+                            <input id="form1" min="0" name="quantity" data-id="@item.ProductId" value="@item.Quantity" type="number" class="form-control" oninput="checkInput(this, @item.Price)" />
+                        </div>
+
+                        <button class="btn btn-primary px-3 ms-2"
+                                onclick="incrementInput(this,@item.Price)">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <!-- Quantity -->
+                    <!-- Price -->
+                    <p class="text-start" id="total_@item.ProductId">
+                        @{
+                            var total = item.Product.Price * item.Quantity;
+                            sumTotal += total;
+                        }
+                        Total : @total.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))
+                    </p>
+                    <!-- Price -->
+                </div>
+            </div>
+            <!-- Single item -->
+
+            <hr class="my-4" />
+        </div>
+    }
+</div>
+<script>
+
+    function checkInput(input, price) {
+        if (input.value.trim() !== "") {
+            var idproduct = $(input).data('id');
+            $.post('/Home/UpdateCartDetail', { idproduct: idproduct, sl: input.value })
+                .done(function (data) {
+                    console.log(data)
+                    var Sum = input.value * price;
+                    $('#total_' + idproduct).text('Total: ' + Sum.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+                    var newData = data.sumTotal;
+                    partialDataChanged(newData);
+                })
+                .fail(function () {
+                    alert("Đã xảy ra lỗi!")
+                });
+        } else {
+            // Giá trị của trường đầu vào rỗng hoặc null
+            // Không kích hoạt sự kiện "change"
+        }
+    }
+
+
+    function incrementInput(btn, price) {
+        const inputElement = btn.parentNode.querySelector('input[type="number"]');
+        inputElement.stepUp();
+        checkInput(inputElement, price);
+    }
+
+    function decrementInput(btn, price) {
+        const inputElement = btn.parentNode.querySelector('input[type="number"]');
+        inputElement.stepDown();
+        checkInput(inputElement, price);
+    }
+
+</script>

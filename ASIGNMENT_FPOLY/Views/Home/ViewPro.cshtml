@@ -1,0 +1,157 @@
+﻿@model IEnumerable<ASIGNMENT_FPOLY.Models.Product>
+
+<div class="tab-content text-charcoal pt-8">
+    <div class="tab-pane fade show active" id="grid-view" role="tabpanel" aria-labelledby="grid-view-tab">
+        <div class="product-grid-view row" style="margin-left:10px">
+            <div class="product-grid-view row">
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="card product-item" style="border: 2px outset rgba(3,255,247,0.57);
+border-radius: 10px 10px 10px 10px; margin-top:10px">
+                                <div class="product-img img-zoom-effect">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="d-flex justify-content-center" style="margin-top:25px; margin-bottom: 25px; height: 150px;">
+                                        <img style="height:95%; width:95%;border: 0px solid #1C6EA4;
+border-radius: 40px 40px 40px 40px" src="~/assets/images/others/@item.Image" alt="Product Images">
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    @if (item.Price * item.AvailableQuality > 10000000)
+                                    {
+                                        <a class="product-name" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; letter-spacing: 1px; word-spacing: 2.8px; color: yellow; font-weight: 700; text-decoration: none solid rgb(232, 230, 227); font-style: normal; font-variant: normal; text-transform: uppercase;">@item.ProductName.ToUpper()</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="product-name pb-2" style="font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+letter-spacing: 1px;
+word-spacing: 2.8px;
+color: #31C9FF;
+font-weight: 700;
+text-decoration: none solid rgb(232, 230, 227);
+font-style: normal;
+font-variant: normal;
+text-transform: uppercase;">@item.ProductName.ToUpper()</a>
+}
+
+
+                                    <div class="price-box pb-1">
+                                        <span class="new-price" style="font-family: Tahoma, Geneva, sans-serif;
+font-size: 13px;
+letter-spacing: -0.8px;
+word-spacing: -0.8px;
+color: #BF0D2C;
+font-weight: 400;
+text-decoration: none solid rgb(232, 230, 227);
+font-style: normal;
+font-variant: normal;
+text-transform: uppercase;">Price: @item.Price.ToString("#,##0") VNĐ</span> <br>
+<span class="new-price" style="font-family: Tahoma, Geneva, sans-serif;
+font-size: 13px;
+letter-spacing: -0.8px;
+word-spacing: -0.8px;
+color: #BF0D2C;
+font-weight: 400;
+text-decoration: none solid rgb(232, 230, 227);
+font-style: normal;
+font-variant: normal;
+text-transform: uppercase;">Tồn Kho: @item.AvailableQuality.ToString("#,##0")</span> <br>
+</div>
+<div class="rating-box">
+    <ul>
+        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+        <li><i class="far fa-star fa-fade" style="color: #5dbc10;"></i></li>
+    </ul>
+</div>
+</div>
+</div>
+</div>
+}
+}
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="list-view" role="tabpanel" aria-labelledby="list-view-tab">
+        <div class="product-list-view with-sidebar row">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-12 pt-6">
+                        <div class="product-item">
+                            <div class="product-img img-zoom-effect">
+                                <a asp-action="Details" asp-route-id="@item.Id">
+                                    <img class="img-full" src="~/assets/images/others/@item.Image" alt="Product Images">
+                                </a>
+                            </div>
+                            <div class="product-content align-self-center">
+                                <a class="product-name pb-2" style="font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+letter-spacing: 1px;
+word-spacing: 2.8px;
+color: #31C9FF;
+font-weight: 700;
+text-decoration: none solid rgb(232, 230, 227);
+font-style: normal;
+font-variant: normal;
+text-transform: uppercase;">@item.ProductName.ToUpper()</a>
+<div class="price-box pb-1">
+    <span class="new-price" style="font-family: Tahoma, Geneva, sans-serif;
+font-size: 13px;
+letter-spacing: -0.8px;
+word-spacing: -0.8px;
+color: #BF0D2C;
+font-weight: 400;
+text-decoration: none solid rgb(232, 230, 227);
+font-style: normal;
+font-variant: normal;
+text-transform: uppercase;">Price: @item.Price.ToString("#,##0") VNĐ</span><br>
+<span class="new-price" style="font-family: Tahoma, Geneva, sans-serif;
+font-size: 13px;
+letter-spacing: -0.8px;
+word-spacing: -0.8px;
+color: #BF0D2C;
+font-weight: 400;
+text-decoration: none solid rgb(232, 230, 227);
+font-style: normal;
+font-variant: normal;
+text-transform: uppercase;">Tồn Kho: @item.AvailableQuality.ToString("#,##0")</span><br>
+</div>
+<div class="rating-box pb-2">
+    <ul>
+        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+        <li><i class="far fa-star fa-fade" style="color: #5dbc10;"></i></li>
+    </ul>
+</div>
+<p class="short-desc mb-0">
+    @{
+        var action = "";
+        if (item.Description == null)
+        {
+            action = "NaN";
+
+        }
+        else
+        {
+            action = item.Description;
+        }
+    }
+    Descripttion: @action
+</p>
+</div>
+</div>
+</div>
+}
+}
+        </div>
+    </div>
+</div>
+

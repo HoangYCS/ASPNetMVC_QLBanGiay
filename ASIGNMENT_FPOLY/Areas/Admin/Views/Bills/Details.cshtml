@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ASIGNMENT_FPOLY.Models.BillDetail>
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    var check = ViewBag.QuanLy;
+    var id = Model.FirstOrDefault().BillId;
+}
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <font><a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i></a> <span class="breadcrumb-item active">PRODUCT</span> <a class="breadcrumb-item" href="#">Product</a></font>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4>BillDetais</h4>
+        <div class="m-t-25">
+            <div id="data-table_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="col-sm-12">
+
+                    <form asp-action="UpdateBill" asp-route-id="@id" method="post">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-3">
+                                <select class="custom-select" name="action">
+                                    <option value="10" selected>Quản lý đơn hàng</option>
+                                    <option value="0">Hủy</option>
+                                    @if (check == false)
+                                    {
+                                        <option value="1">Xác nhận</option>
+                                    }
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary col-sm-12 col-md-1">
+                                Lưu
+                            </button>
+                        </div>
+                    </form>
+
+                    <div id="productList">
+                        <table class="table table-hover e-commerce-table dataTable no-footer">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting" tabindex="0" style="width: 35.325px;">
+                                        <div class="checkbox">
+                                            <input id="checkAll" type="checkbox">
+                                            <label for="checkAll" class="m-b-0"></label>
+                                        </div>
+                                    </th>
+                                    <th class="sorting">STT</th>
+                                    <th class="sorting">Product</th>
+                                    <th class="sorting">Quality</th>
+                                    <th class="sorting">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int Stt = 1;
+                                }
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="">
+                                                <div class="checkbox">
+                                                    <input type="checkbox">
+                                                    <label></label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @Stt
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <a><img class="img-fluid rounded" src="~/assets/images/others/@item.Product.Image" style="max-width: 60px" alt=""></a>
+                                                    <h6 class="m-b-0 m-l-10">@item.Product.ProductName</h6>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @item.Quantily
+                                            </td>
+                                            <td>@item.Price.ToString("#,##0") VNĐ</td>
+                                        </tr>
+                                        Stt++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

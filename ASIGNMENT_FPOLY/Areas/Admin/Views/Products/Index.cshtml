@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ASIGNMENT_FPOLY.Models.Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div id="preloader"></div>
+<div class="page-header">
+    <div class="header-sub-title">
+        <nav class="breadcrumb breadcrumb-dash">
+            <font><a href="#" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i></a> <span class="breadcrumb-item active">PRODUCT</span> <a class="breadcrumb-item" href="#">Product</a></font>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4>Products</h4>
+        <p>
+            <a class="btn btn-icon btn-hover btn-sm btn-rounded" asp-action="Create">
+                <i class="anticon anticon-plus"></i>
+            </a>Creat Product
+        </p>
+        <div class="m-t-25">
+            <div id="data-table_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3">
+                            <div class="dataTables_length" id="data-table_length">
+                                <label>Show <select name="data-table_length" aria-controls="data-table" class="custom-select custom-select-sm form-control form-control-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <select class="custom-select" asp-items="ViewBag.Category">
+                                <option value="" disabled selected>Chose Category</option>
+                                <option>View All</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <select class="custom-select" onchange="myFunction(this.value)">
+                                <option value="" disabled selected>Chose Status</option>
+                                <option value="In Stock">In Stock</option>
+                                <option value="Out Stock">Out Stock</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div id="data-table_filter" class="dataTables_filter">
+                                <form asp-controller="Products" asp-action="Index">
+                                    <label>
+                                        Gia Min:<input type="search" name="giaMin" class="form-control form-control-sm" placeholder="" aria-controls="data-table" id="searchBox">
+                                    </label>
+                                    <label>
+                                        Gia Max:<input type="search" name="giaMax" class="form-control form-control-sm" placeholder="" aria-controls="data-table" id="searchBox">
+                                    </label>
+                                    <button type="submit">Tim Kiem</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="productList">
+                        @await Html.PartialAsync("View", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<script>
+    var load = $('#preloader');
+    window.addEventListener("load", function () {
+        load.css('display', 'none');
+    })
+</script>
+
+<script>
+
+
+    //SelectStatus
+    function myFunction(value) {
+        $.ajax({
+            url: '/Admin/Products/SelectedStatus',
+            type: 'GET',
+            data: { searchValue: value },
+            success: function (result) {
+                $('#productList').html(result);
+            },
+            error: function () {
+                // Xử lý lỗi
+            }
+        });
+    }
+</script>

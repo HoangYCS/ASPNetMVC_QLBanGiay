@@ -1,0 +1,494 @@
+﻿@model ASIGNMENT_FPOLY.Models.ProductViewModel
+@using System.Diagnostics;
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var user = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+    var action = "";
+    if (Model.Description == null)
+    {
+        action = "NaN";
+    }
+    else
+    {
+        action = Model.Description;
+    }
+}
+
+<div id="result">
+    <main class="main-content">
+        <img src="~/assetsLayout/images/blog/banner/Header.png" style="width: 100%; height:60%" />
+        <div class="single-product-area section-space-top-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="single-product-img">
+                            <div class="swiper-container single-product-slider swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
+                                <div class="swiper-wrapper" id="swiper-wrapper-25473313fa4101faa" aria-live="polite" style="width: 2040px; transform: translate3d(-1530px, 0px, 0px); transition-duration: 0ms;">
+                                    <div class="swiper-slide" role="group" aria-label="1 / 4" style="width: 510px;">
+                                        <a href="~/assets/images/others/@Model.Image" class="single-img gallery-popup">
+                                            <img class="img-full" src="~/assets/images/others/@Model.Image" name="imageProduct" alt="Product Image">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" role="group" aria-label="2 / 4" style="width: 510px;">
+                                        <a href="~/assets/images/others/@Model.Image" class="single-img gallery-popup">
+                                            <img class="img-full" src="~/assets/images/others/@Model.Image" name="imageProduct" alt="Product Image">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-prev" role="group" aria-label="3 / 4" style="width: 510px;">
+                                        <a href="~/assets/images/others/@Model.Image" class="single-img gallery-popup">
+                                            <img class="img-full" src="~/assets/images/others/@Model.Image" name="imageProduct" alt="Product Image">
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide swiper-slide-visible swiper-slide-active" role="group" aria-label="4 / 4" style="width: 510px;">
+                                        <a href="assets/images/product/large-size/2-4-555x645.jpg" class="single-img gallery-popup">
+                                            <img class="img-full" src="~/assets/images/others/@Model.Image" name="imageProduct" alt="Product Image">
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination"></div>
+                                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                            </div>
+                            <div class="swiper-container single-product-thumbs pt-6 swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events swiper-container-thumbs">
+                                <div class="swiper-wrapper" id="swiper-wrapper-7616299bc4f595d5" aria-live="polite" style="transform: translate3d(-180px, 0px, 0px); transition-duration: 0ms;">
+                                    <a href="javascript:void(0)" class="swiper-slide swiper-slide-prev" role="group" aria-label="1 / 4" style="width: 150px; margin-right: 30px;">
+                                        <img class="img-full" src="~/assets/images/others/@Model.Image" name="imageProduct" alt="Product Thumnail">
+                                    </a>
+                                    <a href="javascript:void(0)" class="swiper-slide swiper-slide-visible swiper-slide-active" role="group" aria-label="2 / 4" style="width: 150px; margin-right: 30px;">
+                                        <img class="img-full" src="~/assets/images/others/@Model.Image" name="imageProduct" alt="Product Thumnail">
+                                    </a>
+                                    <a href="javascript:void(0)" class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="3 / 4" style="width: 150px; margin-right: 30px;">
+                                        <img class="img-full" src="~/assets/images/others/@Model.Image" name="imageProduct" alt="Product Thumnail">
+                                    </a>
+                                    <a href="javascript:void(0)" class="swiper-slide swiper-slide-visible swiper-slide-thumb-active" role="group" aria-label="4 / 4" style="width: 150px; margin-right: 30px;">
+                                        <img class="img-full" src="~/assets/images/others/@Model.Image" name="imageProduct" alt="Product Thumnail">
+                                    </a>
+                                </div>
+                                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 pt-9 pt-lg-0">
+                        <div class="single-product-content">
+                            <h2 class="title">@Model.ProductName</h2>
+                            <div class="price-box pb-1">
+                                <span class="new-price text-danger" id="price">Price: @Model.Price.ToString("C0", new System.Globalization.CultureInfo("vi-VN"))</span> <br />
+                                <span class="text-danger" id="soLuong">Số lượng tồn: @Model.AvailableQuality.ToString("#,##0")</span>
+                            </div>
+                            <div class="rating-box-wrap pb-7">
+                                <div class="rating-box">
+                                    <ul>
+                                        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+                                        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+                                        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+                                        <li><i class="fas fa-star fa-fade" style="color: #35e212;"></i></li>
+                                        <li><i class="far fa-star fa-fade" style="color: #5dbc10;"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="review-status ps-4">
+                                    <a href="javascript:void(0)">( 1 Customer Review )</a>
+                                </div>
+                            </div>
+                            <div class="product-category text-matterhorn pb-2">
+                                <span class="title">Category :</span>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)">@Model.NameCategory</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="product-category text-matterhorn pb-2">
+                                <span class="title">Brand :</span>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)">@Model.NameBrand</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row" style="margin-top:5px">
+                                <div class="col-md-2">
+                                    Color:
+                                </div>
+                                <div class="col-md-9">
+                                    <select id="ColorId" onchange="getProductDetails()">
+                                        @foreach (var item in ViewBag.Color)
+                                        {
+                                            <option value="@item.Value" selected="@(Guid.Parse(item.Value) == Model.ColorId ? "selected" : null)">@item.Text</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:5px">
+                                <div class="col-md-2">
+                                    Size:
+                                </div>
+                                <div class="col-md-9">
+                                    <select id="SizeId" onchange="getProductDetailss()">
+                                        @foreach (var size in ViewBag.Size)
+                                        {
+                                            <option value="@size">@size</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="social-link align-items-center" style="margin-top:5px">
+                                <span class="title pe-3">Share:</span>
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="fa-brands fa-instagram fa-fade fa-xl"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="fa-brands fa-youtube fa-fade fa-xl"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">
+                                            <i class="fa-brands fa-facebook fa-fade fa-xl"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="quantity-with-btn pb-7" style="margin-top: 35px">
+                                <li class="quantity">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" value="1" type="number" min="1" max="@Model.AvailableQuality" id="SLAddCart">
+                                        <div class="dec qtybutton"><i class="fa fa-minus"></i></div><div class="inc qtybutton"><i class="fa fa-plus"></i></div>
+                                    </div>
+                                </li>
+                                <li class="add-to-cart">
+                                    <a onclick="AddToCartDetails()" class="btn btn-custom-size lg-size btn-primary btn-secondary-hover rounded-0">Add to cart</a>
+                                </li>
+                                <li class="wishlist-btn-wrap">
+                                    <a class="btn rounded-0">
+                                        <i class="pe-7s-like"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-tab-area section-space-top-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="nav product-tab-nav product-tab-style-2" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="active btn btn-custom-size" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">
+                                    Description
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="btn btn-custom-size" id="reviews-tab" data-bs-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">
+                                    Reviews
+                                </a>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a class="btn btn-custom-size" id="shipping-tab" data-bs-toggle="tab" href="#shipping" role="tab" aria-controls="shipping" aria-selected="false">
+                                    Shipping
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content product-tab-content">
+                            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                                <div class="product-description-body">
+                                    <p class="short-desc mb-0">
+                                        @action
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                                <div class="product-review-body">
+                                    <h4 class="heading mb-5">3 Review Items</h4>
+                                    <ul class="user-info-wrap">
+                                        <li>
+                                            <ul class="user-info">
+                                                <li class="user-avatar">
+                                                    <img src="assets/images/testimonial/user/1.png" alt="User Image">
+                                                </li>
+                                                <li class="user-comment">
+                                                    <div class="rating-box">
+                                                        <ul>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="meta">
+                                                        <span><strong>Oscar -</strong> March 15, 2021</span>
+                                                    </div>
+                                                    <p class="short-desc mb-0">
+                                                        “Sed ligula sapien, fermentum id est eget,
+                                                        viverra auctor sem. Vivamus maximus enim vitae urna porta, ut
+                                                        euismod nibh lacinia ellentesque at diam voluptas quas nisi, culpa
+                                                        in accusantium“
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="user-info">
+                                                <li class="user-avatar">
+                                                    <img src="assets/images/testimonial/user/1.png" alt="User Image">
+                                                </li>
+                                                <li class="user-comment">
+                                                    <div class="rating-box">
+                                                        <ul>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="meta">
+                                                        <span><strong>Oscar -</strong> March 15, 2021</span>
+                                                    </div>
+                                                    <p class="short-desc mb-0">
+                                                        “Sed ligula sapien, fermentum id est eget,
+                                                        viverra auctor sem. Vivamus maximus enim vitae urna porta, ut
+                                                        euismod nibh lacinia ellentesque at diam voluptas quas nisi, culpa
+                                                        in accusantium“
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul class="user-info">
+                                                <li class="user-avatar">
+                                                    <img src="assets/images/testimonial/user/1.png" alt="User Image">
+                                                </li>
+                                                <li class="user-comment">
+                                                    <div class="rating-box">
+                                                        <ul>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                            <li><i class="pe-7s-star"></i></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="meta">
+                                                        <span><strong>Oscar -</strong> March 15, 2021</span>
+                                                    </div>
+                                                    <p class="short-desc mb-0">
+                                                        “Sed ligula sapien, fermentum id est eget,
+                                                        viverra auctor sem. Vivamus maximus enim vitae urna porta, ut
+                                                        euismod nibh lacinia ellentesque at diam voluptas quas nisi, culpa
+                                                        in accusantium“
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <div class="feedback-area pt-5">
+                                        <h2 class="heading mb-1">Add a review</h2>
+                                        <p class="short-desc mb-3">Your email address will not be published.</p>
+                                        <div class="rating-box">
+                                            <span>Your rating</span>
+                                            <ul class="ps-4">
+                                                <li><i class="pe-7s-star"></i></li>
+                                                <li><i class="pe-7s-star"></i></li>
+                                                <li><i class="pe-7s-star"></i></li>
+                                                <li><i class="pe-7s-star"></i></li>
+                                                <li><i class="pe-7s-star"></i></li>
+                                            </ul>
+                                        </div>
+                                        <form class="feedback-form pt-8" action="#">
+                                            <div class="group-input">
+                                                <div class="form-field me-md-6 mb-6 mb-md-0">
+                                                    <input type="text" name="name" placeholder="Your Name*" class="input-field">
+                                                </div>
+                                                <div class="form-field me-md-6 mb-6 mb-md-0">
+                                                    <input type="text" name="email" placeholder="Your Email*" class="input-field">
+                                                </div>
+                                                <div class="form-field">
+                                                    <input type="text" name="number" placeholder="Phone number" class="input-field">
+                                                </div>
+                                            </div>
+                                            <div class="form-field mt-6">
+                                                <textarea name="message" placeholder="Message" class="textarea-field"></textarea>
+                                            </div>
+                                            <div class="button-wrap mt-8">
+                                                <button type="submit" value="submit" class="btn btn-custom-size lg-size btn-secondary btn-primary-hover btn-lg rounded-0" name="submit">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
+                                <div class="product-shipping-body">
+                                    <h4 class="title">Shipping</h4>
+                                    <p class="short-desc mb-4">
+                                        The item will be shipped from China. So it need 15-20 days to
+                                        deliver. Our product is good with reasonable price and we believe you will worth it.
+                                        So please wait for it patiently! Thanks.Any question please kindly to contact us and
+                                        we promise to work hard to help you to solve the problem
+                                    </p>
+                                    <h4 class="title">About return request</h4>
+                                    <p class="short-desc mb-4">
+                                        If you don't need the item with worry, you can contact us
+                                        then we will help you to solve the problem, so please close the return request!
+                                        Thanks
+                                    </p>
+                                    <h4 class="title">Guarantee</h4>
+                                    <p class="short-desc mb-0">
+                                        If it is the quality question, we will resend or refund to
+                                        you; If you receive damaged or wrong items, please contact us and attach some
+                                        pictures about product, we will exchange a new correct item to you after the
+                                        confirmation.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+@*<script>
+        function getProductDetails() {
+            var IdSS = "@ViewBag.Id";
+            alert(IdSS);
+            var colorId = $('#ColorId').val();  // Lấy giá trị của select có id="color
+            $.ajax({
+                url: '/Home/Details',
+                type: 'POST',
+                data: {idColor: colorId, nameProduct: "@Model.ProductName", idBrand: "@Model.BrandId", idCategory: "@Model.CategoryId"},
+                dataType: 'html',
+                success: function (data) {
+                    $('#result').html(data);
+                    alert(IdSS);
+                    var currentUrl = window.location.href;
+                    var newUrl = currentUrl.replace(/\/Home\/Details\/\w+-\w+-\w+-\w+-\w+/, "/Home/Details/" + IdSS);
+                    window.history.pushState({}, null, newUrl);
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error " + jqXHR.status + ": " + errorThrown);
+                    console.log(jqXHR.responseText);
+                }
+            });
+        }
+    </script>*@
+@{
+    Guid Getid = Model.Id;
+}
+<script>
+    var Getid = "@Getid";
+    function getProductDetails() {
+        var colorId = $('#ColorId').val();  // Lấy giá trị của select có id="color
+        $.ajax({
+            url: '/Home/Details',
+            type: 'POST',
+            data: { idColor: colorId, nameProduct: "@Model.ProductName", idBrand: "@Model.BrandId", idCategory: "@Model.CategoryId" },
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    var currentUrl = window.location.href;
+                    var newUrl = currentUrl.replace(/\/Home\/Details\/\w+-\w+-\w+-\w+-\w+/, "/Home/Details/" + data.id)
+                    window.history.pushState({}, null, newUrl);
+                    var pricepro = 'Price: ' + new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.price);
+                    console.log(data)
+                    Getid = data.id;
+                    $('#price').text(pricepro);
+                    $('#soLuong').text('Số lượng tồn: ' + data.availableQuality.toLocaleString());
+                    var absoluteUrl = window.location.origin + "/assets/images/others/" + data.image;
+                    var images = document.querySelectorAll('[name=imageProduct]');
+                    for (var i = 0; i < images.length; i++) {
+                        images[i].setAttribute('src', absoluteUrl);
+                    }
+                    var select = $("#SizeId");
+                    select.empty();
+                    for (var i = 0; i < data.listSelect.length; i++) {
+                        var option = $("<option>").val(data.listSelect[i]).text(data.listSelect[i]);
+                        select.append(option);
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error " + jqXHR.status + ": " + errorThrown);
+                console.log(jqXHR.responseText);
+                alert("Error " + jqXHR.status + ": " + jqXHR.responseJSON.errorMessage);
+            }
+        });
+    }
+
+    function getProductDetailss() {
+        var colorId = $('#ColorId').val();  // Lấy giá trị của select có id="color
+        var nameSizeGet = $('#SizeId').val();  // Lấy giá trị của select có id="color
+        $.ajax({
+            url: '/Home/Details',
+            type: 'POST',
+            data: { idColor: colorId, nameProduct: "@Model.ProductName", idBrand: "@Model.BrandId", idCategory: "@Model.CategoryId", nameSize: nameSizeGet },
+            dataType: 'json',
+            success: function (data) {
+                if (data != null) {
+                    var currentUrl = window.location.href;
+                    var newUrl = currentUrl.replace(/\/Home\/Details\/\w+-\w+-\w+-\w+-\w+/, "/Home/Details/" + data.id)
+                    window.history.pushState({}, null, newUrl);
+                    var pricepro = 'Price: ' + new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(data.price);
+                    console.log(data)
+                    $('#price').text(pricepro);
+                    $('#soLuong').text('Số lượng tồn: ' + data.availableQuality.toLocaleString());
+                    var absoluteUrl = window.location.origin + "/assets/images/others/" + data.image;
+                    var images = document.querySelectorAll('[name=imageProduct]');
+                    for (var i = 0; i < images.length; i++) {
+                        images[i].setAttribute('src', absoluteUrl);
+                    }
+                    Getid = data.id;
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error " + jqXHR.status + ": " + errorThrown);
+                console.log(jqXHR.responseText);
+                alert("Error " + jqXHR.status + ": " + jqXHR.responseJSON.errorMessage);
+            }
+        });
+    }
+</script>
+<script>
+    function AddToCartDetails() {
+        var sl = $('#SLAddCart').val();
+        $.ajax({
+            url: '/Home/AddMyCart',
+            type: 'POST',
+            data: { id: Getid, n: sl },
+            success: function (result) {
+                $.notify("Bạn đã thêm thành công sản phẩm vào giỏ hàng", "success");
+            },
+            error: function (xhr, status, error) {
+                alert('Error occurred while adding product to cart.');
+            }
+        });
+    }
+    window.addEventListener("popstate", function (e) {
+        // Gửi một AJAX request để tải lại trang
+        $.ajax({
+            url: window.location.href,
+            type: "GET",
+            success: function (data) {
+                // Thay thế nội dung của thẻ <body> bằng dữ liệu mới tải về
+                $("body").html(data);
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi
+            }
+        });
+    });
+
+    //window.addEventListener("popstate", function (e) {
+    //    location.reload();
+    //});
+</script>

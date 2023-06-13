@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ASIGNMENT_FPOLY.Models.Bill>
+<table class="table table-hover e-commerce-table dataTable no-footer">
+    <thead>
+        <tr role="row">
+            <th class="sorting" tabindex="0" style="width: 35.325px;">
+                <div class="checkbox">
+                    <input id="checkAll" type="checkbox">
+                    <label for="checkAll" class="m-b-0"></label>
+                </div>
+            </th>
+            <th class="sorting">STT</th>
+            <th class="sorting">User</th>
+            <th class="sorting">Tổng đơn</th>
+            <th class="sorting">Ngày tạo</th>
+            <th class="sorting">Địa chỉ</th>
+            <th class="sorting">Note</th>
+            <th class="sorting">Status</th>
+            <th class="sorting"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int Stt = 1;
+        }
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td class="">
+                        <div class="checkbox">
+                            <input type="checkbox">
+                            <label></label>
+                        </div>
+                    </td>
+                    <td>
+                        @Stt
+                    </td>
+                    <td>@item.User.UserName</td>
+                    <td>@item.TotalPrice.ToString("#,##0") VNĐ</td>
+                    <td>@item.Creatdate</td>
+                    <td>@item.shipping_address</td>
+                    <td>@item.Note</td>
+                    @if (item.Status == 1)
+                    {
+                        <td>Đã thanh toán</td>
+                    }
+                    else if (item.Status == 2)
+                    {
+                        <td style="color:red">Đặt hàng</td>
+                    }
+                    else if (item.Status == 0)
+                    {
+                        <td style="color:red">Đã hủy</td>
+                    }
+                    <td class="text-right">
+                        <a class="btn btn-icon btn-hover btn-sm btn-rounded pull-right" asp-action="Details" asp-route-id="@item.Id">
+                            <i class="far fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                Stt++;
+            }
+        }
+    </tbody>
+</table>
