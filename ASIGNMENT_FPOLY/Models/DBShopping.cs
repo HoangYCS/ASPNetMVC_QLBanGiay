@@ -23,7 +23,7 @@ namespace ASIGNMENT_FPOLY.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-60O7MBS;Initial Catalog=ProductNewShop124;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-60O7MBS;Initial Catalog=MVCSHOPGIAY;Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

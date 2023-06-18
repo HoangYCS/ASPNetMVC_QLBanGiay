@@ -7,7 +7,7 @@
         {
             <div class="card  my-card-style">
                 <div class="card-image">
-                    <img src="/assets/images/others/@item.Image" class="item-image-card-1"/>
+                    <img src="/assets/images/others/@item.Image" class="item-image-card-1" />
                     <img src="https://lh3.googleusercontent.com/-WQdbBAEEKEM/YY2vNpTZK5I/AAAAAAAA0g0/M6LMcweuYNYn-KKW7seqA3MWwvk6XhrNgCNcBGAsYHQ/h240/12.png"
                          style="position: absolute; width: 100%;height: 100%;" />
                 </div>
@@ -17,7 +17,7 @@
                         <div style="margin-bottom:6px" class="uDeVr">
                             <div class="full-rating">
                                 <div class="total">
-                                    <span>4.8</span>
+                                    <span style="font-size: 17px">4.8</span>
                                     <svg stroke="currentColor" fill="currentColor" stroke-width="0"
                                          viewBox="0 0 24 24" size="14" color="#fdd836" style="color:#fdd836"
                                          height="14" width="14" xmlns="http://www.w3.org/2000/svg">
@@ -26,41 +26,40 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="boder-doc"></div>
-                            <div class="da-ban">Đã bán 185</div>
+                            <div class="boder-doc" style="font-size: 17px"></div>
+                            <div class="da-ban" style="font-size: 17px">Đã bán 185</div>
                         </div>
                         <div class="price-discount">
                             <div class="price-discount__price">23.500<sup> ₫</sup></div>
                         </div>
                         <div class="badge-under-rating">
                             <div class="item">
-                                <span>Nhiều màu</span>
-                            </div>
-                            <div class="item">
-                                <span>Nhiều màu</span>
-                            </div>
-                            <div class="item">
-                                <span>Nhiều màu</span>
-                            </div>
-                            <div class="item">
-                                <span>Nhiều màu</span>
-                            </div>
-                            <div class="item">
-                                <span>Nhiều màu</span>
+                                <span style="font-size: 12px">Nhiều màu</span>
                             </div>
                         </div>
                         <div class="card-user">
 
                         </div>
                     </div>
+                    
                     <div class="card-bottom">
-                        <div class="d-flex justify-content-evenly">
-                            <button type="button" class="btn btn-info btn-rounded">Mua ngay</button>
-                            <button type="button" class="btn btn-info btn-rounded">So sánh</button>
+                        <div class="d-flex justify-content-space-between">
+                            <button class="btn btn-primary btn-lg form-group" style="flex: 1;margin-right:10px" onclick="AddCart()">
+                                Add Cart
+                            </button>
+                            <button class="btn btn-primary btn-lg form-group" style="flex: 1;margin-left:10px" onclick="location.href='@Url.Action("Details", "Home", new { id = item.Id })'">
+                                View
+                            </button>
                         </div>
+
                     </div>
                 </div>
             </div>
-         }
+        }
     </div>
 </div>
+<script>
+    function AddCart() {
+        createtoast1('1');
+    }
+</script>

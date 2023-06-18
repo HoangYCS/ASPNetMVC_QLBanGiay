@@ -9,6 +9,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Content Remove="wwwroot\js\Aleart.js" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Folder Include="Areas\Admin\Data\" />
 		<Folder Include="Areas\Admin\Models\" />
 		<Folder Include="Extensions\" />
@@ -34,6 +38,10 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc" Version="6.0.13" />
 		<PackageReference Include="toastr" Version="2.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <TypeScriptCompile Include="wwwroot\js\Aleart.js" />
 	</ItemGroup>
 
 </Project>

@@ -28,6 +28,10 @@ function removeTag(element, tag) {
     let index = TempTag.indexOf(tag);
     if (index > -1) {
         TempTag.splice(index, 1);
+        if (TempTag.length === 0) {
+            slideSclick.show();
+            listTag.hide();
+        }
     }
 
     if (TempTag.length === 2 && TempTag[TempTag.length - 1] === "Xóa tất cả") {
@@ -105,38 +109,35 @@ $('.checkbox-item-brand, .checkbox-item-color, .checkbox-item-price').on('change
         $('.checkbox-item-price').prop('checked', false);
         $('#check-all-price').prop('checked', true);
     }
-    listBrand = [];
-    $('.checkbox-item-brand:checked').each(function () {
-        listBrand.push($(this).val());
-    })
 
     listColor = $('.checkbox-item-color:checked').map(function () {
         return $(this).val();
-    }).get();
-
-    listPrice = [];
-    $('.checkbox-item-price:checked').each(function () {
-        listPrice.push($(this).val());
-    })
+    }).get().filter(item => item !== "on");
+    listBrand = $('.checkbox-item-brand:checked').map(function () {
+        return $(this).val();
+    }).get().filter(item => item !== "on");
+    listPrice = $('.checkbox-item-price:checked').map(function () {
+        return $(this).val();
+    }).get().filter(item => item !== "on");
 
     if (listBrand.length === 0) {
         $('#check-all-brand').prop('checked', true);
-    } else if (listBrand.filter(item => item !== "on").length > 0) {
+    } else if (listBrand.length > 0) {
         $('#check-all-brand').prop('checked', false);
     }
 
     if (listPrice.length === 0) {
         $('#check-all-price').prop('checked', true);
-    } else if (listPrice.filter(item => item !== "on").length > 0) {
+    } else if (listPrice.length > 0) {
         $('#check-all-price').prop('checked', false);
     }
 
     if (listColor.length === 0) {
         $('#check-all-color').prop('checked', true);
-    } else if (listColor.filter(item => item !== "on").length > 0) {
+    } else if (listColor.length > 0) {
         $('#check-all-color').prop('checked', false);
     }
-    listAll = [...listBrand.filter(item => item !== "on"), ...listColor.filter(item => item !== "on"), ...listPrice.filter(item => item !== "on")];
+    listAll = [...listBrand, ...listColor, ...listPrice];
 
     if (listAll.length) {
         slideSclick.hide();

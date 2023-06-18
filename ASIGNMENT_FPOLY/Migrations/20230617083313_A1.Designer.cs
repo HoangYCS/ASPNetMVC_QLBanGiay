@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASIGNMENT_FPOLY.Migrations
 {
     [DbContext(typeof(DBShopping))]
-    [Migration("20230613142125_A1")]
+    [Migration("20230617083313_A1")]
     partial class A1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

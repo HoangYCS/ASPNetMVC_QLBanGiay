@@ -1,5 +1,5 @@
-const notificationsAlert = document.querySelector(".notificationsAlert"),
-buttons = document.querySelectorAll(".buttons .btn1");
+﻿const notificationsAlert = document.querySelector(".notificationsAlert"),
+    buttons = document.querySelectorAll(".buttons .btn1");
 
 const toast1Details = {
     timer: 5000,
@@ -27,7 +27,7 @@ const toast1Details = {
 
 const removetoast1 = (toast1) => {
     toast1.classList.add("hide");
-    if(toast1.timeoutId) clearTimeout(toast1.timeoutId); // Clearing the timeout for the toast1
+    if (toast1.timeoutId) clearTimeout(toast1.timeoutId); // Clearing the timeout for the toast1
     setTimeout(() => toast1.remove(), 500); // Removing the toast1 after 500ms
 }
 
