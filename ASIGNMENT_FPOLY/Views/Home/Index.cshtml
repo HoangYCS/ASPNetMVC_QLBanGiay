@@ -8,56 +8,31 @@
         <div class="main-sidebar-left">
             <div class="item-filter">
                 <div class="cdt-filter__title">
-                    Hãng
-                    sản xuất
+                    Size
                 </div>
-                <div class="row" id="hang-san-xuat" data-toggle="collapse" data-target="#hang-san-xuat"
+                <div class="row" id="hang-san-xuat" data-toggle="collapse" data-target="#size"
                      aria-expanded="true">
                     <div class="col-sm-6 col-lg-6">
                         <label class="form-check">
-                            <input class="form-check-input checkbox-item-brand" type="checkbox" checked
-                                   id="check-all-brand">
+                            <input class="form-check-input" type="checkbox" checked
+                                   id="check-all-size">
                             <span class="form-check-label">
                                 Tất cả
                             </span>
                         </label>
                     </div>
-                    <div class="col-sm-6 col-lg-6">
-                        <label class="form-check">
-                            <input class="form-check-input checkbox-item-brand" type="checkbox" name="brand"
-                                   value="Nike">
-                            <span class="form-check-label">
-                                Nike
-                            </span>
-                        </label>
-                    </div>
-                    <div class="col-sm-6 col-lg-6">
-                        <label class="form-check">
-                            <input class="form-check-input checkbox-item-brand" type="checkbox" name="brand"
-                                   value="Adidas">
-                            <span class="form-check-label">
-                                Adidas
-                            </span>
-                        </label>
-                    </div>
-                    <div class="col-sm-6 col-lg-6">
-                        <label class="form-check">
-                            <input class="form-check-input checkbox-item-brand" type="checkbox" name="brand"
-                                   value="Gusi">
-                            <span class="form-check-label">
-                                Gusi
-                            </span>
-                        </label>
-                    </div>
-                    <div class="col-sm-6 col-lg-6">
-                        <label class="form-check">
-                            <input class="form-check-input checkbox-item-brand" type="checkbox" name="brand"
-                                   value="Hamic">
-                            <span class="form-check-label">
-                                Hamic
-                            </span>
-                        </label>
-                    </div>
+                    @foreach (Size item in ViewBag.ListSize)
+                    {
+                        <div class="col-sm-6 col-lg-6">
+                            <label class="form-check">
+                                <input class="form-check-input checkbox-item-size" type="checkbox" name="brand"
+                                       value="@item.SizeName">
+                                <span class="form-check-label">
+                                    @item.SizeName
+                                </span>
+                            </label>
+                        </div>
+                    }
                 </div>
                 <hr>
             </div>
@@ -75,42 +50,19 @@
                             </span>
                         </label>
                     </div>
-                    <div class="col-sm-6 col-lg-6">
-                        <label class="form-check">
-                            <input class="form-check-input checkbox-item-color" type="checkbox" name="color"
-                                   value="Xanh">
-                            <span class="form-check-label">
-                                Xanh
-                            </span>
-                        </label>
-                    </div>
-                    <div class="col-sm-6 col-lg-6">
-                        <label class="form-check">
-                            <input class="form-check-input checkbox-item-color" type="checkbox" name="color"
-                                   value="Đỏ">
-                            <span class="form-check-label">
-                                Đỏ
-                            </span>
-                        </label>
-                    </div>
-                    <div class="col-sm-6 col-lg-6">
-                        <label class="form-check">
-                            <input class="form-check-input checkbox-item-color" type="checkbox" name="color"
-                                   value="Tím">
-                            <span class="form-check-label">
-                                Tím
-                            </span>
-                        </label>
-                    </div>
-                    <div class="col-sm-6 col-lg-6">
-                        <label class="form-check">
-                            <input class="form-check-input checkbox-item-color" type="checkbox" name="color"
-                                   value="Vàng">
-                            <span class="form-check-label">
-                                Vàng
-                            </span>
-                        </label>
-                    </div>
+                    @foreach (Color item in ViewBag.ListColor)
+                    {
+                        <div class="col-sm-6 col-lg-6">
+                            <label class="form-check">
+                                <input class="form-check-input checkbox-item-color" type="checkbox" name="color"
+                                       value="@item.NameColor">
+                                <span class="form-check-label">
+                                    @item.NameColor
+                                </span>
+                            </label>
+                        </div>
+                    }
+
                 </div>
                 <hr>
             </div>

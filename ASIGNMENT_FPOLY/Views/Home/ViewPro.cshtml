@@ -44,11 +44,8 @@
                     
                     <div class="card-bottom">
                         <div class="d-flex justify-content-space-between">
-                            <button class="btn btn-primary btn-lg form-group" style="flex: 1;margin-right:10px" onclick="AddCart()">
-                                Add Cart
-                            </button>
-                            <button class="btn btn-primary btn-lg form-group" style="flex: 1;margin-left:10px" onclick="location.href='@Url.Action("Details", "Home", new { id = item.Id })'">
-                                View
+                            <button class="btn btn-primary btn-lg form-group" style="flex: 1;margin-right:10px" onclick="location.href='@Url.Action("Details", "Home",new {id=item.Id})'">
+                                Mua ngay
                             </button>
                         </div>
 
@@ -58,8 +55,3 @@
         }
     </div>
 </div>
-<script>
-    function AddCart() {
-        createtoast1('1');
-    }
-</script>

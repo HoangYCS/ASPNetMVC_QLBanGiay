@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Linq;
+using AutoMapper;
 
 namespace ASIGNMENT_FPOLY.Controllers
 {
@@ -38,6 +40,7 @@ namespace ASIGNMENT_FPOLY.Controllers
             sizeService = new SizeService();
             brandService = new BrandService();
             categoryService = new CategoryService();
+            ViewBag.ListColor = colorService.GetAllColors();
         }
 
         public IActionResult IndexLogin()
@@ -137,10 +140,24 @@ namespace ASIGNMENT_FPOLY.Controllers
         public IActionResult Details(Guid id)
         {
             var product = productService.GetProductById(id);
-            var listProduct = productService.GetAllProducts().Where(x => x.ProductName == product.ProductName && x.BrandId == product.BrandId && x.CategoryId == product.CategoryId);
-            ViewBag.Color = new SelectList(colorService.GetAllColors().Where(x => x.Status == 1).Where(item => listProduct.Any(y => y.ColorId == item.Id)), "Id", "NameColor").ToList();
-            var listProductColor = productService.GetAllProducts().Where(x => x.ProductName == product.ProductName && x.BrandId == product.BrandId && x.CategoryId == product.CategoryId && x.ColorId == product.ColorId);
-            ViewBag.Size = sizeService.GetAllSizes().Where(x => x.Status == 1).Where(item => listProductColor.Any(y => y.SizeId == item.Id)).Select(x => x.SizeName).ToList();
+            var listProduct = productService.GetAllProducts().Where(x => x.ProductName == product.ProductName && x.BrandId == product.BrandId && x.CategoryId == product.CategoryId).ToList();
+            ViewBag.Size = new SelectList(listProduct.GroupBy(pro => pro.Size.SizeName).Select(item => item.First()).Select(pro => new { pro.SizeId, pro.Size.SizeName }), "SizeId", "SizeName").ToList();
+            bool Check = true;
+            ViewBag.ColorCheck = listProduct.GroupBy(pro => pro.ColorId).SelectMany(g => g.Count() > 1 ? Enumerable.Repeat(g.First(), 1) : g).Select(pro =>
+            {
+                var content = (pro.ColorId == product.ColorId && Check) ? "tttttt1" : (listProduct.Where(x => x.SizeId == product.SizeId).Select(x => x.ColorId).ToList().Any(idColor => idColor == pro.ColorId) ? "" : "crossed-out");
+
+                if (pro.SizeId == product.SizeId && Check)
+                {
+                    Check = false;
+                }
+                return new CheckViewModel()
+                {
+                    Id = pro.ColorId,
+                    NameColor = pro.Color.NameColor,
+                    Content = content
+                };
+            }).ToList();
             var x = productService.GetProductById(id);
             var productModel = new ProductViewModel
             {
@@ -183,31 +200,64 @@ namespace ASIGNMENT_FPOLY.Controllers
         }
 
         [HttpPost]
-        public IActionResult Details(Guid idColor, Guid idSize, string nameProduct, Guid idBrand, Guid idCategory, string nameSize)
+        public IActionResult Details(Guid idColor,Guid idSize, string nameProduct, Guid idBrand, Guid idCategory)
         {
             try
             {
+                if (idColor != Guid.Empty)
+                {
+                    var GetProduct = productService.GetAllProducts().FirstOrDefault(x => x.ProductName == nameProduct && x.BrandId == idBrand && x.CategoryId == idCategory && x.SizeId == idSize && x.ColorId == idColor);
+
+
+                    var ParamGet = new MapperConfiguration(cfg =>
+                        cfg.CreateMap<Product, ProductViewModel>()
+                    ).CreateMapper().Map<ProductViewModel>(GetProduct);
+
+                    return Json(ParamGet);
+
+                }
                 var listProduct = productService.GetAllProducts().Where(x => x.ProductName == nameProduct && x.BrandId == idBrand && x.CategoryId == idCategory);
-                ViewBag.Color = new SelectList(colorService.GetAllColors().Where(x => x.Status == 1).Where(item => listProduct.Any(y => y.ColorId == item.Id)), "Id", "NameColor");
-                var listProductColor = productService.GetAllProducts().Where(x => x.ProductName == nameProduct && x.BrandId == idBrand && x.CategoryId == idCategory && x.ColorId == idColor);
-                var ListSize = sizeService.GetAllSizes().Where(x => x.Status == 1).Where(item => listProductColor.Any(y => y.SizeId == item.Id)).Select(x => x.SizeName).ToList();
-                var newIdSize = nameSize == null ? sizeService.GetAllSizes().Where(x => x.Status == 1).Where(item => listProductColor.Any(y => y.SizeId == item.Id)).ToList()[0].Id : sizeService.GetSizesByName(nameSize).Id;
-                var x = productService.GetAllProducts().FirstOrDefault(x => x.ProductName == nameProduct && x.BrandId == idBrand && x.CategoryId == idCategory && x.ColorId == idColor && x.SizeId == newIdSize);
+
+                var product = productService.GetAllProducts().FirstOrDefault(x => x.ProductName == nameProduct && x.BrandId == idBrand && x.CategoryId == idCategory && x.SizeId == idSize);
+                bool isFirstOccurrence = true;
+
+                var listColor = listProduct.Select(pro =>
+                {
+                    var content = pro.SizeId == product.SizeId && isFirstOccurrence ? "tttttt1" : (listProduct.Where(x => x.SizeId == product.SizeId).Select(x => x.ColorId).ToList().Any(idColor => idColor == pro.ColorId) ? "" : "crossed-out");
+
+                    if (pro.SizeId == product.SizeId && isFirstOccurrence)
+                    {
+                        isFirstOccurrence = false;
+                    }
+
+                    return new CheckViewModel()
+                    {
+                        Id = pro.ColorId,
+                        NameColor = pro.Color.NameColor,
+                        Content = content
+                    };
+                }).ToList();
                 var productModel = new ProductViewModel
                 {
-                    Id = x.Id,
-                    ProductName = x.ProductName,
-                    ColorId = x.ColorId,
-                    SizeId = x.SizeId,
-                    NameBrand = brandService.GetBrandById(x.BrandId).Name,
-                    NameCategory = categoryService.GetCategoryById(x.CategoryId).Name,
-                    Price = x.Price,
-                    Description = x.Description,
-                    Image = x.Image,
-                    AvailableQuality = x.AvailableQuality,
-                    BrandId = x.BrandId,
-                    CategoryId = x.CategoryId,
-                    ListSelect = ListSize
+                    Id = product.Id,
+                    ProductName = product.ProductName,
+                    ColorId = product.ColorId,
+                    SizeId = product.SizeId,
+                    NameBrand = brandService.GetBrandById(product.BrandId).Name,
+                    NameCategory = categoryService.GetCategoryById(product.CategoryId).Name,
+                    Price = product.Price,
+                    Description = product.Description,
+                    Image = product.Image,
+                    AvailableQuality = product.AvailableQuality,
+                    BrandId = product.BrandId,
+                    CategoryId = product.CategoryId,
+                    ListSelect = listColor.GroupBy(cl => cl.NameColor)
+                    .SelectMany(g =>
+                        g.FirstOrDefault(c => c.Content == "tttttt1") != null
+                        ? g.Where(c => c.Content == "tttttt1")
+                        : (g.Count() > 1 ? Enumerable.Repeat(g.First(), 1) : g)
+                    )
+                    .ToList()
                 };
 
                 return Json(productModel);

@@ -2,7 +2,7 @@ const ul = document.querySelector(".ul-tag");
 input = document.querySelector(".input-tag");
 const slideSclick = $('.slide-show');
 const listTag = $('.cdt-list-tag');
-let listBrand = [];
+let listSize = [];
 let listColor = [];
 let listPrice = [];
 
@@ -52,16 +52,17 @@ function removeTag(element, tag) {
         $('#check-all-color').prop('checked', listColor.length === 0);
     }
 
-    if (listBrand.includes(tag)) {
-        let brandIndex = listBrand.indexOf(tag);
-        if (brandIndex > -1) {
-            listBrand.splice(brandIndex, 1);
+    if (listSize.includes(tag)) {
+        let sizeIndex = listSize.indexOf(tag);
+        if (sizeIndex > -1) {
+            listSize.splice(sizeIndex, 1);
         }
-        $('.checkbox-item-brand').prop('checked', false);
-        listBrand.forEach(brand => {
-            $(`.checkbox-item-brand[value="${brand}"]`).prop('checked', true);
+        $('.checkbox-item-size').prop('checked', false);
+
+        listSize.forEach(size => {
+            $(`.checkbox-item-size[value="${size}"]`).prop('checked', true);
         });
-        $('#check-all-brand').prop('checked', listBrand.length === 0);
+        $('#check-all-size').prop('checked', listSize.length === 0);
     }
 
     if (listPrice.includes(tag)) {
@@ -82,12 +83,10 @@ function removeTag(element, tag) {
 function removeAllTags() {
     TempTag.length = 0;
     ul.querySelectorAll("li").forEach(li => li.remove());
-    listColor = [];
-    listBrand = [];
-    $('.checkbox-item-brand').prop('checked', false);
-    $('#check-all-brand').prop('checked', true);
     $('.checkbox-item-color').prop('checked', false);
     $('#check-all-color').prop('checked', true);
+    $('.checkbox-item-size').prop('checked', false);
+    $('#check-all-size').prop('checked', true);
     $('.checkbox-item-price').prop('checked', false);
     $('#check-all-price').prop('checked', true);
     slideSclick.show();
@@ -97,39 +96,43 @@ function removeAllTags() {
 
 
 
-$('.checkbox-item-brand, .checkbox-item-color, .checkbox-item-price').on('change', function () {
+$('.checkbox-item-size, .checkbox-item-color, .checkbox-item-price').on('change', function () {
     let listAll = [];
-    if (this.id === 'check-all-brand') {
-        $('.checkbox-item-brand').prop('checked', false);
-        $('#check-all-brand').prop('checked', true);
-    } else if (this.id === 'check-all-color') {
+    if (this.id === 'check-all-color') {
         $('.checkbox-item-color').prop('checked', false);
         $('#check-all-color').prop('checked', true);
     } else if (this.id === 'check-all-price') {
         $('.checkbox-item-price').prop('checked', false);
         $('#check-all-price').prop('checked', true);
     }
+    else if (this.id === 'check-all-size') {
+        $('.checkbox-item-size').prop('checked', false);
+        $('#check-all-size').prop('checked', true);
+    }
 
     listColor = $('.checkbox-item-color:checked').map(function () {
-        return $(this).val();
-    }).get().filter(item => item !== "on");
-    listBrand = $('.checkbox-item-brand:checked').map(function () {
         return $(this).val();
     }).get().filter(item => item !== "on");
     listPrice = $('.checkbox-item-price:checked').map(function () {
         return $(this).val();
     }).get().filter(item => item !== "on");
 
-    if (listBrand.length === 0) {
-        $('#check-all-brand').prop('checked', true);
-    } else if (listBrand.length > 0) {
-        $('#check-all-brand').prop('checked', false);
-    }
+    listSize = $('.checkbox-item-size:checked').map(function () {
+        return $(this).val();
+    }).get().filter(item => item !== "on");
 
+
+   
     if (listPrice.length === 0) {
         $('#check-all-price').prop('checked', true);
     } else if (listPrice.length > 0) {
         $('#check-all-price').prop('checked', false);
+    }
+
+    if (listSize.length === 0) {
+        $('#check-all-size').prop('checked', true);
+    } else if (listSize.length > 0) {
+        $('#check-all-size').prop('checked', false);
     }
 
     if (listColor.length === 0) {
@@ -137,7 +140,7 @@ $('.checkbox-item-brand, .checkbox-item-color, .checkbox-item-price').on('change
     } else if (listColor.length > 0) {
         $('#check-all-color').prop('checked', false);
     }
-    listAll = [...listBrand, ...listColor, ...listPrice];
+    listAll = [...listSize, ...listColor, ...listPrice];
 
     if (listAll.length) {
         slideSclick.hide();
@@ -146,6 +149,6 @@ $('.checkbox-item-brand, .checkbox-item-color, .checkbox-item-price').on('change
     } else {
         slideSclick.show();
         listTag.hide();
-        $('#check-all-brand').prop('checked', true);
+        $('#check-all-size').prop('checked', true);
     }
 });

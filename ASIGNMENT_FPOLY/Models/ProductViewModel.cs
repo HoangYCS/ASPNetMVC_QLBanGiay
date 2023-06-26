@@ -23,7 +23,7 @@ namespace ASIGNMENT_FPOLY.Models
 
         public Guid BrandId { get; set; }
 
-        public List<string> ListSelect { get; set; }
+        public List<CheckViewModel> ListSelect { get; set; }
 
     }
 }

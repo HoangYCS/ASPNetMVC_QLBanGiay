@@ -18,7 +18,6 @@
 
 <div id="result">
     <main class="main-content">
-        <img src="~/assetsLayout/images/blog/banner/Header.png" style="width: 100%; height:60%" />
         <div class="single-product-area section-space-top-100">
             <div class="container">
                 <div class="row">
@@ -107,31 +106,28 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="row" style="margin-top:5px">
-                                <div class="col-md-2">
-                                    Color:
-                                </div>
-                                <div class="col-md-9">
-                                    <select id="ColorId" onchange="getProductDetails()">
-                                        @foreach (var item in ViewBag.Color)
-                                        {
-                                            <option value="@item.Value" selected="@(Guid.Parse(item.Value) == Model.ColorId ? "selected" : null)">@item.Text</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="row" style="margin-top:5px">
+                            <div class="row" style="margin-top:10px">
                                 <div class="col-md-2">
                                     Size:
                                 </div>
                                 <div class="col-md-9">
-                                    <select id="SizeId" onchange="getProductDetailss()">
-                                        @foreach (var size in ViewBag.Size)
-                                        {
-                                            <option value="@size">@size</option>
-                                        }
-                                    </select>
+                                    @foreach (var item in ViewBag.Size)
+                                    {
+                                        <button class="boxSize size1 @((item.Value == Model.SizeId.ToString()) ? "tttttt1" : "")" data-idSize="@item.Value" onclick="chooseSize(this)">@item.Text</button>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:10px">
+                                <div class="col-md-2">
+                                    Color:
+                                </div>
+                                <div class="col-md-9" id="boxcolors">
+                                    @foreach (CheckViewModel item in ViewBag.ColorCheck)
+                                    {
+                                        <button class="boxSize color @item.Content" data-idColor="@item.Id" onclick="chooseColor(this)">@item.NameColor</button>
+                                    }
                                 </div>
                             </div>
 
@@ -385,8 +381,12 @@
 @{
     Guid Getid = Model.Id;
 }
+
 <script>
     var Getid = "@Getid";
+</script>
+<script>
+
     function getProductDetails() {
         var colorId = $('#ColorId').val();  // Lấy giá trị của select có id="color
         $.ajax({
@@ -466,7 +466,7 @@
             type: 'POST',
             data: { id: Getid, n: sl },
             success: function (result) {
-                $.notify("Bạn đã thêm thành công sản phẩm vào giỏ hàng", "success");
+              alert("Bạn đã thêm thành công sản phẩm vào giỏ hàng")
             },
             error: function (xhr, status, error) {
                 alert('Error occurred while adding product to cart.');
@@ -491,4 +491,117 @@
     //window.addEventListener("popstate", function (e) {
     //    location.reload();
     //});
+</script>
+
+<script>
+    function chooseColor(element) {
+        $('.boxSize.color').removeClass('tttttt1');
+        $(element).addClass('tttttt1');
+
+        var idSize = $('.tttttt1').attr('data-idSize');
+        var idColor = $(element).attr('data-idcolor');
+        console.log(idColor);
+        var data = new FormData();
+        data.append('idSize', idSize);
+        data.append('idColor', idColor);
+        data.append('nameProduct', "@Model.ProductName");
+        data.append('idBrand', "@Model.BrandId");
+        data.append('idCategory', "@Model.CategoryId");
+        $.ajax({
+            url: '/Home/Details',
+            type: 'POST',
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result != null) {
+                    console.log(result);
+                    var currentUrl = window.location.href;
+                    var newUrl = currentUrl.replace(/\/Home\/Details\/\w+-\w+-\w+-\w+-\w+/, "/Home/Details/" + result.id)
+                    window.history.pushState({}, null, newUrl);
+                    var pricepro = 'Price: ' + new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(result.price);
+                    $('#price').text(pricepro);
+                    $('#soLuong').text('Số lượng tồn: ' + result.availableQuality.toLocaleString());
+                    var absoluteUrl = window.location.origin + "/assets/images/others/" + result.image;
+                    var images = document.querySelectorAll('[name=imageProduct]');
+                    for (var i = 0; i < images.length; i++) {
+                        images[i].setAttribute('src', absoluteUrl);
+                    }
+                    Getid = result.id;
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+                console.log(status);
+                console.log(error);
+                console.log(xhr);
+            }
+        });
+
+
+    }
+</script>
+
+<script>
+    function chooseSize(element) {
+        $('.boxSize.size1').removeClass('tttttt1');
+        $(element).addClass('tttttt1');
+        var idSize = $('.tttttt1').attr('data-idSize');
+        var data = new FormData();
+        data.append('idSize', idSize);
+        data.append('nameProduct', "@Model.ProductName");
+        data.append('idBrand', "@Model.BrandId");
+        data.append('idCategory', "@Model.CategoryId");
+        $.ajax({
+            url: '/Home/Details',
+            type: 'POST',
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result != null) {
+                    var currentUrl = window.location.href;
+                    var newUrl = currentUrl.replace(/\/Home\/Details\/\w+-\w+-\w+-\w+-\w+/, "/Home/Details/" + result.id)
+                    window.history.pushState({}, null, newUrl);
+                    var pricepro = 'Price: ' + new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(result.price);
+                    Getid = result.id;
+                    $('#price').text(pricepro);
+                    $('#soLuong').text('Số lượng tồn: ' + result.availableQuality.toLocaleString());
+                    var absoluteUrl = window.location.origin + "/assets/images/others/" + result.image;
+                    var images = document.querySelectorAll('[name=imageProduct]');
+                    for (var i = 0; i < images.length; i++) {
+                        images[i].setAttribute('src', absoluteUrl);
+                    }
+
+                    var buttons = $.map(result.listSelect, function (item) {
+                        var button = $('<button>')
+                            .addClass('boxSize color ' + item.content)
+                            .attr('data-idColor', item.id)
+                            .attr('onclick', 'chooseColor(this)')
+                            .text(item.nameColor);
+                        return button;
+                    });
+
+                    // Xóa tất cả các phần tử button cũ trong #boxcolors
+                    $('#boxcolors').empty();
+
+                    // Loại bỏ phần tử đầu tiên và thêm lớp (class) cho các phần tử còn lại
+                    $.each(buttons.slice(1), function (index, button) {
+                        $(button).addClass('marginLeft5px');
+                    });
+
+                    // Thêm các phần tử button mới vào #boxcolors
+                    $.each(buttons, function (index, button) {
+                        $('#boxcolors').append(button);
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+                console.log(status);
+                console.log(error);
+                console.log(xhr);
+            }
+        });
+    }
 </script>

@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="~/assetsLayout/css/plugins/nice-select.css">
     <link rel="stylesheet" href="~/assetsLayout/css/plugins/magnific-popup.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="~/assetsLayout/css/StyleSheet.css">
@@ -42,23 +43,67 @@
         input[type="checkbox"] {
             font-size: 15px;
         }
-        .form-check-label{
+
+        .form-check-label {
             font-size: 15px;
         }
-        .cdt-filter__title{
+
+        .cdt-filter__title {
             font-size: 18px;
         }
-        .cdt-head__title{
+
+        .cdt-head__title {
             font-size: 25px;
         }
-        .card-title{
+
+        .card-title {
             font-size: 20px;
         }
-        .item{
+
+        .item {
             font-size: 15px;
         }
-        .price-discount__price{
+
+        .price-discount__price {
             font-size: 18px;
+        }
+
+        button.boxSize.tttttt1 {
+            background-color: yellow;
+            position: relative;
+        }
+
+
+        .tttttt1::after {
+            content: "\2713";
+            position: absolute;
+            top: -8px;
+            right: 0px;
+            font-size: 18px;
+            color: green;
+        }
+
+        
+        .crossed-out {
+            text-decoration: line-through;
+            pointer-events: none;
+        }
+
+        .boxSize {
+            cursor: pointer;
+            margin: -5px 8px 0px 0px;
+            padding: 8px;
+            color: rgb(36, 36, 36);
+            font-size: 13px;
+            min-width: 100px;
+            position: relative;
+            background-color: rgb(242, 242, 242);
+            border: 1px solid transparent;
+            outline: 0px;
+        }
+
+        .marginLeft5px {
+            margin-left: 5px;
         }
     </style>
 </head>
@@ -115,7 +160,7 @@
                         <div class="col-lg-12">
                             <div class="header-middle-wrap">
                                 <a href="index.html" class="header-logo">
-                                    <img src="assets/images/logo/dark.png" alt="Header Logo">
+                                    <img src="~/assetsLayout/images/logo/dark.png" alt="Header Logo">
                                 </a>
                                 <div class="header-search-area d-none d-lg-block">
                                     <form action="#" class="header-searchbox">
@@ -275,22 +320,22 @@
                                                             <div class="swiper-wrapper" id="swiper-wrapper-6f10d22ae2a5e685a" aria-live="off" style="transition-duration: 750ms;">
                                                                 <div class="swiper-slide img-zoom-effect with-overlay swiper-slide-duplicate swiper-slide-next swiper-slide-duplicate-prev" data-swiper-slide-index="1" role="group" aria-label="1 / 4" style="width: 293px; opacity: 0; transform: translate3d(0px, 0px, 0px); transition-duration: 750ms;">
                                                                     <a href="#" class="single-item">
-                                                                        <img class="img-full" src="assets/images/megamenu/slider/2.jpg" alt="Megamenu Slider">
+                                                                        <img class="img-full" src="~/assetsLayout/images/megamenu/slider/2.jpg" alt="Megamenu Slider">
                                                                     </a>
                                                                 </div>
                                                                 <div class="swiper-slide img-zoom-effect with-overlay swiper-slide-duplicate-active" data-swiper-slide-index="0" role="group" aria-label="2 / 4" style="width: 293px; opacity: 0; transform: translate3d(-293px, 0px, 0px); transition-duration: 750ms;">
                                                                     <a href="#" class="single-item">
-                                                                        <img class="img-full" src="assets/images/megamenu/slider/1.jpg" alt="Megamenu Slider">
+                                                                        <img class="img-full" src="~/assetsLayout/images/megamenu/slider/1.jpg" alt="Megamenu Slider">
                                                                     </a>
                                                                 </div>
                                                                 <div class="swiper-slide img-zoom-effect with-overlay swiper-slide-prev swiper-slide-duplicate-next" data-swiper-slide-index="1" role="group" aria-label="3 / 4" style="width: 293px; opacity: 0; transform: translate3d(-586px, 0px, 0px); transition-duration: 750ms;">
                                                                     <a href="#" class="single-item">
-                                                                        <img class="img-full" src="assets/images/megamenu/slider/2.jpg" alt="Megamenu Slider">
+                                                                        <img class="img-full" src="~/assetsLayout/images/megamenu/slider/2.jpg" alt="Megamenu Slider">
                                                                     </a>
                                                                 </div>
                                                                 <div class="swiper-slide img-zoom-effect with-overlay swiper-slide-duplicate swiper-slide-active" data-swiper-slide-index="0" role="group" aria-label="4 / 4" style="width: 293px; opacity: 1; transform: translate3d(-879px, 0px, 0px); transition-duration: 750ms;">
                                                                     <a href="#" class="single-item">
-                                                                        <img class="img-full" src="assets/images/megamenu/slider/1.jpg" alt="Megamenu Slider">
+                                                                        <img class="img-full" src="~/assetsLayout/images/megamenu/slider/1.jpg" alt="Megamenu Slider">
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -734,7 +779,7 @@
                         <span class="ammount">$240.00</span>
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
-                        <a href="cart.html" class="btn btn-secondary btn-primary-hover">View Cart</a>
+                        <a asp-controller="Home" asp-action="MyCart" class="btn btn-secondary btn-primary-hover">View Cart</a>
                         <a href="checkout.html" class="btn btn-secondary btn-primary-hover">Checkout</a>
                     </div>
                 </div>
@@ -742,6 +787,108 @@
             <div class="global-overlay"></div>
         </header>
         <!-- Main Header Area End Here -->
+        <!-- Main Banner Area End Here -->
+        <div class="banner-with-testimonial py-10" data-bg-image="/assetsLayout/images/banner/banner1.jpg" style="background-image: url('/assetsLayout/images/banner/banner1.jpg');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="parallax-img-wrap">
+                            <div class="papaya">
+                                <div class="scene fill" style="transform: translate3d(0px, 0px, 0px) rotate(0.0001deg); transform-style: preserve-3d; backface-visibility: hidden; position: relative; pointer-events: none;">
+                                    <div class="expand-width" data-depth="0.2" style="transform: translate3d(-10.2px, 2px, 0px); transform-style: preserve-3d; backface-visibility: hidden; position: relative; display: block; left: 0px; top: 0px;">
+                                        <img src="https://png.pngtree.com/png-clipart/20210227/ourmid/pngtree-mens-shoes-casual-running-shoes-everyday-clipart-png-image_2965548.jpg" alt="Banner Images">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 align-self-center">
+                        <div class="swiper-container testimonial-slider text-white swiper-container-initialized swiper-container-horizontal swiper-container-pointer-events">
+                            <div class="swiper-wrapper" id="swiper-wrapper-210614e33962412b5" aria-live="off" style="transform: translate3d(-1080px, 0px, 0px); transition-duration: 0ms;">
+                                <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="1" role="group" aria-label="1 / 4" style="width: 510px; margin-right: 30px;">
+                                    <div class="testimonial-item">
+                                        <div class="testimonial-content section-title">
+                                            <span class="sub-title">What People Say</span>
+                                            <h2 class="title mb-6">Client Feedback</h2>
+                                            <p class="short-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu tempor incididj ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                                            <div class="user-info">
+                                                <div class="user-img">
+                                                    <img src="~/assetsLayout/images/avatar/1.jpg" alt="User Image">
+                                                </div>
+                                                <div class="user-content">
+                                                    <span class="user-name">Oscar Thomsen</span>
+                                                    <span class="user-occupation">Customer</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide swiper-slide-prev swiper-slide-duplicate-next" data-swiper-slide-index="0" role="group" aria-label="2 / 4" style="width: 510px; margin-right: 30px;">
+                                    <div class="testimonial-item">
+                                        <div class="testimonial-content section-title">
+                                            <span class="sub-title">What People Say</span>
+                                            <h2 class="title mb-6">Client Feedback</h2>
+                                            <p class="short-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu tempor incididj ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                                            <div class="user-info">
+                                                <div class="user-img">
+                                                    <img src="~/assetsLayout/images/avatar/1.jpg" alt="User Image">
+                                                </div>
+                                                <div class="user-content">
+                                                    <span class="user-name">Oscar Thomsen</span>
+                                                    <span class="user-occupation">Customer</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="1" role="group" aria-label="3 / 4" style="width: 510px; margin-right: 30px;">
+                                    <div class="testimonial-item">
+                                        <div class="testimonial-content section-title">
+                                            <span class="sub-title">What People Say</span>
+                                            <h2 class="title mb-6">Client Feedback</h2>
+                                            <p class="short-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu tempor incididj ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                                            <div class="user-info">
+                                                <div class="user-img">
+                                                    <img src="~/assetsLayout/images/avatar/1.jpg" alt="User Image">
+                                                </div>
+                                                <div class="user-content">
+                                                    <span class="user-name">Oscar Thomsen</span>
+                                                    <span class="user-occupation">Customer</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide swiper-slide-duplicate swiper-slide-next swiper-slide-duplicate-prev" data-swiper-slide-index="0" role="group" aria-label="4 / 4" style="width: 510px; margin-right: 30px;">
+                                    <div class="testimonial-item">
+                                        <div class="testimonial-content section-title">
+                                            <span class="sub-title">What People Say</span>
+                                            <h2 class="title mb-6">Client Feedback</h2>
+                                            <p class="short-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu tempor incididj ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+                                            <div class="user-info">
+                                                <div class="user-img">
+                                                    <img src="~/assetsLayout/images/avatar/1.jpg" alt="User Image">
+                                                </div>
+                                                <div class="user-content">
+                                                    <span class="user-name">Oscar Thomsen</span>
+                                                    <span class="user-occupation">Customer</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Add Arrows -->
+                            <div class="testimonial-button-next" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-210614e33962412b5"></div>
+                            <div class="testimonial-button-prev" tabindex="0" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-210614e33962412b5"></div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Main Baner Area End Here -->
+
         @RenderBody()
 
         <!-- Begin Footer Area -->
