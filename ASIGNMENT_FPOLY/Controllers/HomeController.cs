@@ -143,15 +143,10 @@ namespace ASIGNMENT_FPOLY.Controllers
             var product = productService.GetProductById(id);
             var listProduct = productService.GetAllProducts().Where(x => x.ProductName == product.ProductName && x.BrandId == product.BrandId && x.CategoryId == product.CategoryId).ToList();
             ViewBag.Size = new SelectList(listProduct.GroupBy(pro => pro.Size.SizeName).Select(item => item.First()).Select(pro => new { pro.SizeId, pro.Size.SizeName }), "SizeId", "SizeName").ToList();
-            bool Check = true;
+
             ViewBag.ColorCheck = listProduct.GroupBy(pro => pro.ColorId).SelectMany(g => g.Count() > 1 ? Enumerable.Repeat(g.First(), 1) : g).Select(pro =>
             {
-                var content = (pro.ColorId == product.ColorId && Check) ? "tttttt1" : (listProduct.Where(x => x.SizeId == product.SizeId).Select(x => x.ColorId).ToList().Any(idColor => idColor == pro.ColorId) ? "" : "crossed-out");
-
-                if (pro.SizeId == product.SizeId && Check)
-                {
-                    Check = false;
-                }
+                var content = (pro.ColorId == product.ColorId) ? "tttttt1" : (listProduct.Where(x => x.SizeId == product.SizeId).Select(x => x.ColorId).ToList().Any(idColor => idColor == pro.ColorId) ? "" : "crossed-out");
                 return new CheckViewModel()
                 {
                     Id = pro.ColorId,

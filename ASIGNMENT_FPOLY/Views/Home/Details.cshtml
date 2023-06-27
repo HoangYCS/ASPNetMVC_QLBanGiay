@@ -458,7 +458,10 @@
             type: 'POST',
             data: { id: Getid, n: sl },
             success: function (result) {
-              alert("Bạn đã thêm thành công sản phẩm vào giỏ hàng")
+                setTimeout(function () {
+                    alert("Thêm vào sản phẩm vào giỏ hàng thành công!");
+                    window.location.reload();
+                },1000)
             },
             error: function (xhr, status, error) {
                 alert('Error occurred while adding product to cart.');

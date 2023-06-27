@@ -93,15 +93,13 @@ function removeAllTags() {
     listTag.hide();
 }
 
-
-
-
 $('.checkbox-item-size, .checkbox-item-color, .checkbox-item-price').on('change', function () {
     let listAll = [];
     if (this.id === 'check-all-color') {
         $('.checkbox-item-color').prop('checked', false);
         $('#check-all-color').prop('checked', true);
-    } else if (this.id === 'check-all-price') {
+    }
+    else if (this.id === 'check-all-price') {
         $('.checkbox-item-price').prop('checked', false);
         $('#check-all-price').prop('checked', true);
     }
@@ -113,6 +111,7 @@ $('.checkbox-item-size, .checkbox-item-color, .checkbox-item-price').on('change'
     listColor = $('.checkbox-item-color:checked').map(function () {
         return $(this).val();
     }).get().filter(item => item !== "on");
+
     listPrice = $('.checkbox-item-price:checked').map(function () {
         return $(this).val();
     }).get().filter(item => item !== "on");

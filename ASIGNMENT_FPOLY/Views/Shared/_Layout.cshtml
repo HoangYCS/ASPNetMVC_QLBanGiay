@@ -5,6 +5,8 @@
 @{
     string userName = HttpContextAccessor.HttpContext.Session.GetString("UserName");
     string role = HttpContextAccessor.HttpContext.Session.GetString("Role");
+    var myCart = SessionServices.GetObjectFromJson<List<CartDetail>>(HttpContextAccessor.HttpContext.Session, "CartSession") as List<CartDetail>;
+
 }
 <!DOCTYPE html>
 <html lang="zxx">
@@ -201,7 +203,9 @@
                                         <li class="minicart-wrap me-3 me-lg-0">
                                             <a href="#miniCart" class="minicart-btn toolbar-btn">
                                                 <i class="pe-7s-shopbag"></i>
-                                                <span class="quantity">3</span>
+                                                <span class="quantity">
+                                                    @(myCart==null?0:myCart.Count())
+                                                </span>
                                             </a>
                                         </li>
                                         <li class="mobile-menu_wrap d-block d-lg-none">
@@ -225,18 +229,9 @@
                                     <nav class="main-nav">
                                         <ul>
                                             <li class="drop-holder">
-                                                <a href="javascript:void(0)">
+                                                <a asp-controller="Home" asp-action="Index">
                                                     Home
-                                                    <i class="fa fa-chevron-down"></i>
                                                 </a>
-                                                <ul class="drop-menu">
-                                                    <li>
-                                                        <a href="index.html">Home One</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="index-2.html">Home Two</a>
-                                                    </li>
-                                                </ul>
                                             </li>
                                             <li>
                                                 <a href="about.html">About</a>
@@ -743,7 +738,6 @@
                         <ul class="minicart-list">
                             @if (HttpContextAccessor.HttpContext.Session.GetString("CartSession") != null)
                             {
-                                var myCart = SessionServices.GetObjectFromJson<List<CartDetail>>(HttpContextAccessor.HttpContext.Session, "CartSession") as List<CartDetail>;
                                 foreach (var item in myCart)
                                 {
                                     <li class="minicart-product">
@@ -766,11 +760,11 @@
                     </div>
                     <div class="minicart-item_total">
                         <span>Subtotal</span>
-                        <span class="ammount">$0</span>
+                        <span class="ammount">$@(myCart==null?0:myCart.Sum(x=>x.Quantity*x.Price))</span>
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
                         <a asp-controller="Home" asp-action="MyCart" class="btn btn-secondary btn-primary-hover">View Cart</a>
-                        <a href="checkout.html" class="btn btn-secondary btn-primary-hover">Checkout</a>
+                        @*<a href="checkout.html" class="btn btn-secondary btn-primary-hover">Checkout</a>*@
                     </div>
                 </div>
             </div>

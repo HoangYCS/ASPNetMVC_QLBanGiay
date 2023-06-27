@@ -131,7 +131,9 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
                 p.Image = sourcePath;
                 if (productService.UpdateProduct(p))
                 {
-                    string destinationPath = @"D:\ASM\ASIGNMENT_FPOLY\ASIGNMENT_FPOLY\wwwroot\assets\images\others\";
+                    string currentDirectory = Directory.GetCurrentDirectory();
+                    string rootPath = Directory.GetParent(currentDirectory).FullName;
+                    string destinationPath = Path.Combine(rootPath, "ASIGNMENT_FPOLY", "wwwroot", "assets", "images", "others");
                     string fileName = Path.GetFileName(sourcePath);
                     string destinationFilePath = Path.Combine(destinationPath, fileName);
                     using (var stream = new FileStream(destinationFilePath, FileMode.Create))
