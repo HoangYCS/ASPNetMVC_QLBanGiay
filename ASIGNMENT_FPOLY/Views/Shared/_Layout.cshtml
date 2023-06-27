@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using ASIGNMENT_FPOLY.Services
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -83,7 +84,7 @@
             color: green;
         }
 
-        
+
         .crossed-out {
             text-decoration: line-through;
             pointer-events: none;
@@ -740,43 +741,32 @@
                             <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
                         </div>
                         <ul class="minicart-list">
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close"></i></a>
-                                <a href="shop.html" class="product-item_img">
-                                    <img class="img-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqmUsfUhR1yhd-NNK3dpWYxvpdwKAWBrK5w&usqp=CAU" alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop.html">Black Pepper Grains</a>
-                                    <span class="product-item_quantity">1 x $80.00</span>
-                                </div>
-                            </li>
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="#"><i class="pe-7s-close"></i></a>
-                                <a href="shop.html" class="product-item_img">
-                                    <img class="img-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqmUsfUhR1yhd-NNK3dpWYxvpdwKAWBrK5w&usqp=CAU" alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop.html">Peanut Big Bean</a>
-                                    <span class="product-item_quantity">1 x $80.00</span>
-                                </div>
-                            </li>
-                            <li class="minicart-product">
-                                <a class="product-item_remove" href="#">
-                                    <i class="pe-7s-close"></i>
-                                </a>
-                                <a href="shop.html" class="product-item_img">
-                                    <img class="img-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStqmUsfUhR1yhd-NNK3dpWYxvpdwKAWBrK5w&usqp=CAU" alt="Product Image">
-                                </a>
-                                <div class="product-item_content">
-                                    <a class="product-item_title" href="shop.html">Dried Lemon Green</a>
-                                    <span class="product-item_quantity">1 x $80.00</span>
-                                </div>
-                            </li>
+                            @if (HttpContextAccessor.HttpContext.Session.GetString("CartSession") != null)
+                            {
+                                var myCart = SessionServices.GetObjectFromJson<List<CartDetail>>(HttpContextAccessor.HttpContext.Session, "CartSession") as List<CartDetail>;
+                                foreach (var item in myCart)
+                                {
+                                    <li class="minicart-product">
+                                        <a class="product-item_remove" href="#"><i class="pe-7s-close"></i></a>
+                                        <a href="shop.html" class="product-item_img">
+                                            <img class="img-full" src="/assets/images/others/@item.Product.Image" alt="Product Image">
+                                        </a>
+                                        <div class="product-item_content">
+                                            <a class="product-item_title">@item.Product.ProductName</a>
+                                            <span class="product-item_quantity">@item.Quantity x $@item.Price</span>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                            else
+                            {
+                                <div>Giỏ hàng trống!</div>
+                            }
                         </ul>
                     </div>
                     <div class="minicart-item_total">
                         <span>Subtotal</span>
-                        <span class="ammount">$240.00</span>
+                        <span class="ammount">$0</span>
                     </div>
                     <div class="group-btn_wrap d-grid gap-2">
                         <a asp-controller="Home" asp-action="MyCart" class="btn btn-secondary btn-primary-hover">View Cart</a>

@@ -26,10 +26,11 @@ namespace ASIGNMENT_FPOLY.Controllers
         private readonly ISizeService sizeService;
         private readonly IBrandService brandService;
         private readonly ICategoryService categoryService;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
             productService = new ProductService();
             userService = new UserService();
             cartService = new CartService();
@@ -200,7 +201,7 @@ namespace ASIGNMENT_FPOLY.Controllers
         }
 
         [HttpPost]
-        public IActionResult Details(Guid idColor,Guid idSize, string nameProduct, Guid idBrand, Guid idCategory)
+        public IActionResult Details(Guid idColor, Guid idSize, string nameProduct, Guid idBrand, Guid idCategory)
         {
             try
             {
@@ -333,7 +334,7 @@ namespace ASIGNMENT_FPOLY.Controllers
         public IActionResult ThanhToan(string diaChi, string note, int action)
         {
             var userLogin = userService.GetUserByName(HttpContext.Session.GetString("UserName"));
-            var idUser = userLogin == null ? Guid.Parse("720f788c-c73b-4d88-eaf9-08db3ce7153a") : userLogin.IdUser;
+            var idUser = userLogin == null ? Guid.Parse("dd7ef230-12b2-4329-c747-08db75dfcbe2") : userLogin.IdUser;
             var listCartDetail = cartDetailService.GetAllCartDetailByUserLogin(idUser);
             if (userLogin == null) listCartDetail = SessionServices.GetObjectFromJson<List<CartDetail>>(HttpContext.Session, "CartSession");
             var Chuoi = "";

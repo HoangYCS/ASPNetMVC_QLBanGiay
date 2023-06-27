@@ -5,15 +5,7 @@
 
 @{
     var user = HttpContextAccessor.HttpContext.Session.GetString("UserName");
-    var action = "";
-    if (Model.Description == null)
-    {
-        action = "NaN";
-    }
-    else
-    {
-        action = Model.Description;
-    }
+   
 }
 
 <div id="result">
@@ -197,7 +189,7 @@
                             <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
                                 <div class="product-description-body">
                                     <p class="short-desc mb-0">
-                                        @action
+                                        NAN
                                     </p>
                                 </div>
                             </div>
@@ -385,7 +377,7 @@
 <script>
     var Getid = "@Getid";
 </script>
-<script>
+@*<script>
 
     function getProductDetails() {
         var colorId = $('#ColorId').val();  // Lấy giá trị của select có id="color
@@ -457,7 +449,7 @@
             }
         });
     }
-</script>
+</script>*@
 <script>
     function AddToCartDetails() {
         var sl = $('#SLAddCart').val();
