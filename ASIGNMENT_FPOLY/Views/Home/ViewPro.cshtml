@@ -30,7 +30,7 @@
                             <div class="da-ban" style="font-size: 17px">Đã bán 185</div>
                         </div>
                         <div class="price-discount">
-                            <div class="price-discount__price">23.500<sup> ₫</sup></div>
+                            <div class="price-discount__price">@string.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:C0}", item.Price).Replace(",00", "")</div>
                         </div>
                         <div class="badge-under-rating">
                             <div class="item">

@@ -1,15 +1,12 @@
 ﻿using ASIGNMENT_FPOLY.IServices;
 using ASIGNMENT_FPOLY.Models;
-using Microsoft.AspNetCore.Http;
 using ASIGNMENT_FPOLY.Services;
 using ASIGNMENT_FPOLY.ViewModels;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
-using System.Linq;
-using AutoMapper;
+using System.Diagnostics;
 
 namespace ASIGNMENT_FPOLY.Controllers
 {
@@ -26,6 +23,7 @@ namespace ASIGNMENT_FPOLY.Controllers
         private readonly ISizeService sizeService;
         private readonly IBrandService brandService;
         private readonly ICategoryService categoryService;
+        private readonly IRoleService roleService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         public HomeController(ILogger<HomeController> logger, IHttpContextAccessor httpContextAccessor)
         {
@@ -41,10 +39,16 @@ namespace ASIGNMENT_FPOLY.Controllers
             sizeService = new SizeService();
             brandService = new BrandService();
             categoryService = new CategoryService();
+            roleService = new RoleService();
             ViewBag.ListColor = colorService.GetAllColors();
         }
 
         public IActionResult IndexLogin()
+        {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Register()
         {
             return View();
         }
@@ -53,7 +57,7 @@ namespace ASIGNMENT_FPOLY.Controllers
         {
             HttpContext.Session.Remove("UserName");
             HttpContext.Session.Remove("Role");
-            return RedirectToAction("ViewProduct");
+            return RedirectToAction("Index");
         }
 
         public IActionResult DeleteItemCart(Guid Id)
@@ -68,6 +72,18 @@ namespace ASIGNMENT_FPOLY.Controllers
                 SessionServices.DeletaCartDetailSession(HttpContext.Session, "CartSession", Id);
             }
             return RedirectToAction("MyCart");
+        }
+        [HttpPost]
+        public IActionResult Register([FromForm] RegisterViewModel a)
+        {
+            userService.CreateUser(new User()
+            {
+                UserName = a.UserName,
+                Stustus = 1,
+                RoleId = roleService.GetAllRoles().Where(item => item.RoleName.ToLower().Contains("admin")).First().Id,
+                PassWord = a.Pass
+            });
+            return RedirectToAction("Index");
         }
 
         public IActionResult MyCart()
@@ -127,7 +143,7 @@ namespace ASIGNMENT_FPOLY.Controllers
                             }
                         }
                     }
-                    HttpContext.Session.Remove("CartSession");
+                    HttpContext.Session.SetObjectAsJson("CartSession",getListCart);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -137,6 +153,7 @@ namespace ASIGNMENT_FPOLY.Controllers
             }
             return View("IndexLogin");
         }
+
 
         public IActionResult Details(Guid id)
         {
@@ -290,6 +307,9 @@ namespace ASIGNMENT_FPOLY.Controllers
                     newCartDetail.UserId = userLogin.IdUser;
                     cartDetailService.CreateCartDetail(newCartDetail);
                 }
+
+                var listCartDetail =  cartDetailService.GetAllCartDetailByUserLogin(userLogin.IdUser);
+                HttpContext.Session.SetObjectAsJson("CartSession", listCartDetail);
             }
             else
             {
@@ -315,7 +335,7 @@ namespace ASIGNMENT_FPOLY.Controllers
             return PartialView("Index", products);
         }
 
-        public IActionResult ViewProductAction(string lstColor, string lstSize, string searchKeyword, string sortBy)
+        public IActionResult IndexAction(string lstColor, string lstSize, string searchKeyword, string sortBy)
         {
 
             var listColor = JsonConvert.DeserializeObject<List<string>>(lstColor);

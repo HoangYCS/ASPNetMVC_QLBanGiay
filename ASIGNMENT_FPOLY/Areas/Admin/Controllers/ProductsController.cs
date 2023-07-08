@@ -116,7 +116,6 @@ namespace ASIGNMENT_FPOLY.Areas.Admin.Controllers
             ViewBag.Color = new SelectList(colorService.GetAllColors().Where(x => x.Status == 1), "Id", "NameColor");
             ViewBag.Size = new SelectList(sizeService.GetAllSizes().Where(x => x.Status == 1), "Id", "SizeName");
             ViewBag.Category = new SelectList(categoryService.GetAllCategorys().Where(x => x.Status == 1), "Id", "Name");
-
             return View(productService.GetProductById(id));
         }
 

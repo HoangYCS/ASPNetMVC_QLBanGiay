@@ -186,12 +186,20 @@
                                                 <i class="pe-7s-users"></i>
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButton">
-                                                <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                                <li><a class="dropdown-item" href="login-register.html">Login | Register</a></li>
+                                                @if (String.IsNullOrEmpty(userName))
+                                                {
+                                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="IndexLogin">Đăng nhập</a></li>
+                                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="Register">Đăng kí</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><a class="dropdown-item">@userName</a></li>
+                                                    <li><a class="dropdown-item" asp-controller="Home" asp-action="LogOut">Đăng xuất</a></li>
+                                                }
                                             </ul>
                                         </li>
                                         <li class="d-none d-md-block">
-                                            <a href="wishlist.html">
+                                            <a href="">
                                                 <i class="pe-7s-like"></i>
                                             </a>
                                         </li>
@@ -742,7 +750,7 @@
                                 {
                                     <li class="minicart-product">
                                         <a class="product-item_remove" href="#"><i class="pe-7s-close"></i></a>
-                                        <a href="shop.html" class="product-item_img">
+                                        <a href="/Home/Details/@item.ProductId" class="product-item_img">
                                             <img class="img-full" src="/assets/images/others/@item.Product.Image" alt="Product Image">
                                         </a>
                                         <div class="product-item_content">

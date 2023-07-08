@@ -13,6 +13,7 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<ICartService, CartService>();
 builder.Services.AddTransient<ICartDetailService,CartDetailService>();
+builder.Services.AddTransient<IRoleService,RoleService>();
 builder.Services.AddMvc();
 builder.Services.AddSession(options =>
 {
